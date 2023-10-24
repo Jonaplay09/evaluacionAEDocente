@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/Home">
+
+    <fragment
+        android:id="@+id/Home"
+        android:name="com.itsoeh.jmendoza.evaluacionae.Home"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_menuestudiante_to_configuracion"
+            app:destination="@id/Configuracion" />
+        <action
+            android:id="@+id/action_home_to_evaluaratributos"
+            app:destination="@id/Evaluaratributos" />
+        <action
+            android:id="@+id/action_home_to_asignaturas"
+            app:destination="@id/Asignaturas" />
+    </fragment>
+    <fragment
+        android:id="@+id/Configuracion"
+        android:name="com.itsoeh.jmendoza.evaluacionae.Configuracion"
+        android:label="fragment_configuracion"
+        tools:layout="@layout/fragment_configuracion" >
+        <action
+            android:id="@+id/action_configuracion_to_menuestudiante"
+            app:destination="@id/Home" />
+        <action
+            android:id="@+id/action_configuracion_to_evaluaratributos"
+            app:destination="@id/Evaluaratributos" />
+        <action
+            android:id="@+id/action_configuracion_to_cambiarNombre"
+            app:destination="@id/CambiarNombre" />
+        <action
+            android:id="@+id/action_configuracion_to_cambiarCorreo"
+            app:destination="@id/CambiarCorreo" />
+        <action
+            android:id="@+id/action_configuracion_to_cambiarPassword"
+            app:destination="@id/CambiarPassword" />
+        <action
+            android:id="@+id/action_configuracion_to_about"
+            app:destination="@id/About" />
+    </fragment>
+    <fragment
+        android:id="@+id/Evaluaratributos"
+        android:name="com.itsoeh.jmendoza.evaluacionae.Evaluaratributos"
+        android:label="fragment_evaluaratributos"
+        tools:layout="@layout/fragment_evaluaratributos" >
+        <action
+            android:id="@+id/action_evaluaratributos_to_home"
+            app:destination="@id/Home" />
+        <action
+            android:id="@+id/action_evaluaratributos_to_calificEst"
+            app:destination="@id/CalificEst" />
+    </fragment>
+    <fragment
+        android:id="@+id/CalificEst"
+        android:name="com.itsoeh.jmendoza.evaluacionae.CalificEst"
+        android:label="fragment_calific_est"
+        tools:layout="@layout/fragment_calific_est" >
+        <action
+            android:id="@+id/action_calificEst_to_evaluaratributos"
+            app:destination="@id/Evaluaratributos" />
+        <action
+            android:id="@+id/action_calificEst_to_evalAtributtes"
+            app:destination="@id/EvalAtributtes" />
+    </fragment>
+    <fragment
+        android:id="@+id/Asignaturas"
+        android:name="com.itsoeh.jmendoza.evaluacionae.Asignaturas"
+        android:label="fragment_asignaturas"
+        tools:layout="@layout/fragment_asignaturas" >
+        <action
+            android:id="@+id/action_asignaturas_to_home"
+            app:destination="@id/Home" />
+    </fragment>
+    <fragment
+        android:id="@+id/EvalAtributtes"
+        android:name="com.itsoeh.jmendoza.evaluacionae.EvalAtributtes"
+        android:label="fragment_eval_atributtes"
+        tools:layout="@layout/fragment_eval_atributtes" >
+        <action
+            android:id="@+id/action_evalAtributtes_to_calificEst"
+            app:destination="@id/CalificEst" />
+    </fragment>
+    <fragment
+        android:id="@+id/CambiarNombre"
+        android:name="com.itsoeh.jmendoza.evaluacionae.CambiarNombre"
+        android:label="fragment_cambiar_nombre"
+        tools:layout="@layout/fragment_cambiar_nombre" >
+        <action
+            android:id="@+id/action_cambiarNombre_to_configuracion"
+            app:destination="@id/Configuracion" />
+    </fragment>
+    <fragment
+        android:id="@+id/CambiarCorreo"
+        android:name="com.itsoeh.jmendoza.evaluacionae.CambiarCorreo"
+        android:label="fragment_cambiar_correo"
+        tools:layout="@layout/fragment_cambiar_correo" >
+        <action
+            android:id="@+id/action_cambiarCorreo_to_configuracion"
+            app:destination="@id/Configuracion" />
+    </fragment>
+    <fragment
+        android:id="@+id/CambiarPassword"
+        android:name="com.itsoeh.jmendoza.evaluacionae.CambiarPassword"
+        android:label="fragment_cambiar_password"
+        tools:layout="@layout/fragment_cambiar_password" >
+        <action
+            android:id="@+id/action_cambiarPassword_to_configuracion"
+            app:destination="@id/Configuracion" />
+    </fragment>
+    <fragment
+        android:id="@+id/About"
+        android:name="com.itsoeh.jmendoza.evaluacionae.About"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" >
+        <action
+            android:id="@+id/action_about_to_configuracion"
+            app:destination="@id/Configuracion" />
+    </fragment>
+</navigation>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Fecha: 13/09/2023
+Autor: Jonatan Emmanuel Cornejo Mendoza
+Descripción: Layout de fragment cambiar correo
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CambiarCorreo">
+
+
+    <LinearLayout
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/fondo_login">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:background="@drawable/fondo_menu">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_gravity="center"
+                android:backgroundTint="#F6F6F6"
+                app:cardCornerRadius="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <Button
+                            android:onClick="ViewLogin"
+                            android:id="@+id/chaname_btn_back"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="15dp"
+                            android:background="@drawable/ic_arrow_left"
+                            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10sp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cambiar Nombre"
+                            android:textSize="28sp"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textColor="#000"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Completa los datos"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/cairo_light"
+                            android:textColor="#000"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp" />
+                        <EditText
+                            android:id="@+id/chaname_txt_nombre"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Nuevo nombre"
+                            android:layout_marginTop="50dp" />
+                        <EditText
+
+                            android:id="@+id/chaname_txt_apellidos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Nuevos Apellidos"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="50sp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        <Button
+                            android:id="@+id/chaname_btn_guardar"
+                            android:layout_width="300sp"
+                            android:layout_height="wrap_content"
+                            android:text="Guardar Cambios"
+                            android:fontFamily="@font/cairo_light"
+                            android:textAllCaps="false"
+                            android:layout_marginTop="60sp"
+                            android:background="@drawable/degradado_blue"
+                            android:textColor="@color/white"
+                            android:textSize="19sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

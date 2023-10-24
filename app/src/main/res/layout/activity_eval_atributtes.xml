@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Fecha: 13/09/2023
+Autor: Jonatan Emmanuel Cornejo Mendoza
+Descripción: Layout de fragment eval atributtes
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EvalAtributtes">
+
+    <LinearLayout
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/fondo_login"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+            android:background="@drawable/fondo_menu"
+            >
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                app:cardCornerRadius="20dp"
+                android:backgroundTint="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center"
+                    >
+                    <Button
+                        android:onClick="ViewLogin"
+                        android:id="@+id/evalAtributtes_btn__back"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/ic_arrow_left"
+                        tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Calificaciones"
+                        android:textSize="25sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_semibold"
+                        />
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="5dp"
+                android:layout_weight="10"
+                android:padding="10dp"
+                app:cardCornerRadius="20dp"
+                android:backgroundTint="@color/white">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+
+
+                        <TableLayout
+                            android:id="@+id/table_layout_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stretchColumns="*"
+                            android:layout_marginBottom="10dp">
+
+                            <!-- Fila para "Atributos de Egreso" -->
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="AE1 Aplicaciones Computacionales"
+                                    android:padding="8dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/rounded_top_corners"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:layout_span="4"
+                                    />
+                            </TableRow>
+
+                            <!-- Encabezado de la tabla con las columnas CD1, CD2, CD3 y Sum -->
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD1"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD2"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD3"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="Sum"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginEnd="10dp"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+                            </TableRow>
+
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="40"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="30"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="30"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="100"
+                                    android:layout_marginEnd="10dp"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+                            </TableRow>
+
+                            <!-- Aquí debes agregar filas para cada atributo de egreso y sus calificaciones -->
+
+                        </TableLayout>
+
+                        <TableLayout
+                            android:id="@+id/table_layout_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stretchColumns="*"
+                            android:layout_marginBottom="10dp">
+
+                            <!-- Fila para "Atributos de Egreso" -->
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="AE2 Modelos Computacionales"
+                                    android:padding="8dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/rounded_top_corners"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:layout_span="4"
+                                    />
+                            </TableRow>
+
+                            <!-- Encabezado de la tabla con las columnas CD1, CD2, CD3 y Sum -->
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD1"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD2"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD3"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="Sum"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginEnd="10dp"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+                            </TableRow>
+
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="40"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="30"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="30"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="100"
+                                    android:layout_marginEnd="10dp"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+                            </TableRow>
+
+                            <!-- Aquí debes agregar filas para cada atributo de egreso y sus calificaciones -->
+
+                        </TableLayout>
+
+                        <TableLayout
+                            android:id="@+id/table_layout_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stretchColumns="*"
+                            android:layout_marginBottom="10dp">
+
+                            <!-- Fila para "Atributos de Egreso" -->
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="AE3 Trabajo en Equipo y Comunicación"
+                                    android:padding="8dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/rounded_top_corners"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:layout_span="4"
+                                    />
+                            </TableRow>
+
+                            <!-- Encabezado de la tabla con las columnas CD1, CD2, CD3 y Sum -->
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD1"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD2"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD3"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="Sum"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginEnd="10dp"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+                            </TableRow>
+
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="40"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="30"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="30"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="100"
+                                    android:layout_marginEnd="10dp"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+                            </TableRow>
+
+                            <!-- Aquí debes agregar filas para cada atributo de egreso y sus calificaciones -->
+
+                        </TableLayout>
+
+                        <TableLayout
+                            android:id="@+id/table_layout_4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stretchColumns="*"
+                            android:layout_marginBottom="10dp">
+
+                            <!-- Fila para "Atributos de Egreso" -->
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="AE4 Investigación"
+                                    android:padding="8dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/rounded_top_corners"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:layout_span="4"
+                                    />
+                            </TableRow>
+
+                            <!-- Encabezado de la tabla con las columnas CD1, CD2, CD3 y Sum -->
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD1"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD2"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD3"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="Sum"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginEnd="10dp"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+                            </TableRow>
+
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="40"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="30"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="30"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="100"
+                                    android:layout_marginEnd="10dp"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+                            </TableRow>
+
+                            <!-- Aquí debes agregar filas para cada atributo de egreso y sus calificaciones -->
+
+                        </TableLayout>
+
+                        <TableLayout
+                            android:id="@+id/table_layout_5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stretchColumns="*"
+                            android:layout_marginBottom="10dp">
+
+                            <!-- Fila para "Atributos de Egreso" -->
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="AE5 Preparación para la vída profesional"
+                                    android:padding="8dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/rounded_top_corners"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:layout_span="4"
+                                    />
+                            </TableRow>
+
+                            <!-- Encabezado de la tabla con las columnas CD1, CD2, CD3 y Sum -->
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD1"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD2"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="CD3"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="Sum"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginEnd="10dp"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+                            </TableRow>
+
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="40"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="30"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="30"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="100"
+                                    android:layout_marginEnd="10dp"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+                            </TableRow>
+
+                            <!-- Aquí debes agregar filas para cada atributo de egreso y sus calificaciones -->
+
+                        </TableLayout>
+
+                        <TableLayout
+                            android:id="@+id/table_layout_prom"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stretchColumns="*"
+                            android:layout_marginBottom="10dp">
+
+                            <!-- Fila para "Atributos de Egreso" -->
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Evaluación del estudiante"
+                                    android:padding="8dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/rounded_top_corners"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:layout_span="4"
+                                    />
+                            </TableRow>
+
+                            <!-- Encabezado de la tabla con las columnas CD1, CD2, CD3 y Sum -->
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="Sum"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="%"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginEnd="10dp"
+                                    android:background="@color/blu_btn"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/poppins_semibold" />
+                            </TableRow>
+
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="500"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="100"
+                                    android:layout_marginEnd="10dp"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/btnredondo"
+                                    android:fontFamily="@font/poppins_semibold" />
+                            </TableRow>
+
+                            <!-- Aquí debes agregar filas para cada atributo de egreso y sus calificaciones -->
+
+                        </TableLayout>
+
+                    </LinearLayout>
+                </ScrollView>
+
+            </androidx.cardview.widget.CardView>
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

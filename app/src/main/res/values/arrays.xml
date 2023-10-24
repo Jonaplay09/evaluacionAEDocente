@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="com_google_android_gms_fonts_certs">clonica</string-array>
+    <string-array name="asignaturas">
+    <item>Cálculo Diferencial</item>
+    <item>Fundamentos de Programación</item>
+    <item>Taller de Ética</item>
+    <item>Matemáticas Discretas</item>
+    <item>Taller de Administración</item>
+    <item>Fundamentos de Investigación</item>
+    <item>Cálculo Integral</item>
+    <item>Programación Orientada a Objetos</item>
+    <item>Contabilidad Financiera</item>
+    <item>Quimica General</item>
+    <item>Algebra Lineal</item>
+    <item>Probabilidad y Estadística</item>
+    <item>Cálculo Vectorial</item>
+    <item>Estructura de Datos</item>
+    <item>Cultura Empresarial</item>
+    <item>Investigación de Operaciones</item>
+    <item>Sistemas Operativos</item>
+    <item>Física General</item>
+    <item>Ecuaciones Diferenciales</item>
+    <item>Métodos Numéricos</item>
+    <item>Tópicos Avanzados de Programación</item>
+    <item>Fundamentos de Base de Datos</item>
+    <item>Taller de Sistemas Operativos</item>
+    <item>Principios Eléctricos y Aplicaciones Digitales</item>
+    <item>Fundamentos de Ing. de Software</item>
+    <item>Desarrollo Sustentable</item>
+    <item>Fundamentos de Telecomunicaciones</item>
+    <item>Taller de Base de Datos</item>
+    <item>Simulación</item>
+    <item>Programación WEB</item>
+    <item>Arquitectura de Computadoras</item>
+    <item>Ingeniería de Software</item>
+    <item>Lenguajes y Autómatas I</item>
+    <item>Redes de Computadora</item>
+    <item>Administración de Base de Datos</item>
+    <item>Programación Lógica y Funcional</item>
+    <item>Gestión de Proyectos de Software</item>
+    <item>Lenguajes de Interfaz</item>
+    <item>Taller de Investigación I</item>
+    <item>Lenguajes y Autómatas II</item>
+    <item>Conmutación y Enrutamiento de Redes de Datos</item>
+    <item>Introducción al desarrollo Móvil</item>
+    <item>Introducción al desarrollo Web</item>
+    <item>Inteligencia Artificial</item>
+    <item>Aplicaciones nativas de código abierto</item>
+    <item>Tópicos Avanzados de Base de Datos</item>
+    <item>Sistemas Programables</item>
+    <item>Graficación</item>
+    <item>Administración de Redes</item>
+    <item>Taller de Investigación II</item>
+    <item>Aplicaciones nativas de código propietario</item>
+    <item>Aplicaciones multiplataforma</item>
+    <item>Seguridad en Tecnología Móvil</item>
+    <item>Desarrollo Web Avanzado</item>
+    <item>Tópicos de Desarrollo Web</item>
+    <item>Analítica de Datos</item>
+    </string-array>
+</resources>

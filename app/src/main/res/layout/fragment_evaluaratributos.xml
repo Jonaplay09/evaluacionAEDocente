@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Fecha: 13/09/2023
+Autor: Jonatan Emmanuel Cornejo Mendoza
+Descripción: Layout de fragment evaluar atributos
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Evaluaratributos">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/fondo_menu">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="13"
+                android:backgroundTint="#F6F6F6"
+                android:layout_margin="5dp"
+                app:cardCornerRadius="20dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seleccionar atributos"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textSize="20sp"
+                        android:layout_marginTop="16dp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginTop="150sp"
+                        android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seleccione Atributo de Egreso"
+                        android:layout_gravity="left"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textSize="15sp"
+                        android:layout_marginTop="16dp" />
+                    <Spinner
+                        android:id="@+id/spinnerAtributoEgreso"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Seleccione Atributo de Egreso"
+                        android:layout_marginTop="16dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seleccione Criterio"
+                        android:layout_gravity="left"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textSize="15sp"
+                        android:layout_marginTop="16dp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerCriterio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Seleccione Criterio"
+                        android:layout_marginTop="16dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seleccione Indicador"
+                        android:layout_gravity="left"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textSize="15sp"
+                        android:layout_marginTop="16dp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerIndicador"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Seleccione Indicador"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="30sp"/>
+
+
+                    <Button
+                        android:id="@+id/atributeseval_btn_select"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/degradado_blue"
+                        android:text="Realiza r la selección"
+                        android:textColor="@color/white"
+                        android:textSize="19sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/cairo_light"
+                        android:layout_marginTop="16dp" />
+                </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+</FrameLayout>
