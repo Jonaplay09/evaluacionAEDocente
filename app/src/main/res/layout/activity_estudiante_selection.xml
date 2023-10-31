@@ -65,6 +65,7 @@ Descripción: Layout de fragment calific est
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/student_select_txt_materia"
                             android:text="Nombre de la Materia"
                             android:layout_marginTop="5sp"
                             android:fontFamily="@font/poppins_semibold"
@@ -78,6 +79,7 @@ Descripción: Layout de fragment calific est
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                            android:id="@+id/student_select_txt_claveAsig"
                                 android:text="Clave de la asignatura"
                                 android:fontFamily="@font/cairo_light"
                                 android:textColor="@color/black"
@@ -85,20 +87,38 @@ Descripción: Layout de fragment calific est
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:id="@+id/student_select_txt_claveGrupo"
                                 android:text="Clave del grupo"
                                 android:textColor="@color/black"
                                 android:fontFamily="@font/cairo_light"
                                 android:textSize="14.5sp"></TextView>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
                                 android:layout_marginLeft="15sp"
                                 android:layout_gravity="left"
+                                android:id="@+id/student_select_txt_codigoGru"
                                 android:text="Código de grupo:"
                                 android:fontFamily="@font/cairo_light"
                                 android:textSize="14.5sp"
                                 android:layout_marginBottom="5sp"></TextView>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/student_select_txt_codiGrupo"
+                                android:textColor="@color/black"
+                                android:layout_marginLeft="5sp"
+                                android:layout_gravity="left"
+                                android:text="AT27A"
+                                android:fontFamily="@font/cairo_light"
+                                android:textSize="14.5sp"
+                                android:layout_marginBottom="5sp"></TextView>
+                        </LinearLayout>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -161,6 +181,7 @@ Descripción: Layout de fragment calific est
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom"
                                 android:textColor="#2671d7"
+                                android:id="@+id/student_select_btn_atribu"
                                 android:fontFamily="@font/cairo_light"
                                 android:text="Asignar Atributos de Egreso Al Curso"
                                 android:textSize="16sp"></TextView>

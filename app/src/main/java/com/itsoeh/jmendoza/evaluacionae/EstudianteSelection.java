@@ -1,79 +1,51 @@
 package com.itsoeh.jmendoza.evaluacionae;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.itsoeh.jmendoza.evaluacionae.models.MAsignatura;
+import com.itsoeh.jmendoza.evaluacionae.radapter.AdapterAsignatura;
+
+import java.util.ArrayList;
 
 public class EstudianteSelection extends AppCompatActivity {
-    private Button estsel_btn_est1, estsel_btn_est2, estsel_btn_est3, estsel_btn_est4, btnBack;
+    private TextView txtMateria, txtAsignat, txtGrupo, txtcodigoGrupo, txtAtributo;
+    private RecyclerView recLista;
+    private NavController nav;
+    private ArrayList<MAsignatura> lista;
+    //private AdapterAsignatura x;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estudiante_selection);
-        /*estsel_btn_est1 = findViewById(R.id.estsel_btn_est1);
-        estsel_btn_est2 = findViewById(R.id.estsel_btn_est2);
-        estsel_btn_est3 = findViewById(R.id.estsel_btn_est3);
-        estsel_btn_est4 = findViewById(R.id.estsel_btn_est4);
-        btnBack = findViewById(R.id.estselect_btn__back);
+        txtMateria = findViewById(R.id.student_select_txt_materia);
+        txtAsignat = findViewById(R.id.student_select_txt_claveAsig);
+        txtGrupo = findViewById(R.id.student_select_txt_claveGrupo);
+        txtcodigoGrupo = findViewById(R.id.student_select_txt_codiGrupo);
 
+        // Obtiene los datos del Intent
+        Intent intent = getIntent();
+        String asignatura = intent.getStringExtra("asignatura");
+        String claveAsignatura = intent.getStringExtra("claveAsignatura");
+        String claveGrupo = intent.getStringExtra("claveGrupo");
+        String codigoAsignatura = intent.getStringExtra("codigoAsignatura");
 
-
-        estsel_btn_est1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clicEst1();
-            }
-        });
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        estsel_btn_est2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clicEst2();
-            }
-        });
-        estsel_btn_est3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clicEst3();
-            }
-        });
-        estsel_btn_est4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clicEst4();
-            }
-        });
+        // Establece los datos en las vistas de texto
+        txtMateria.setText(asignatura);
+        txtAsignat.setText(claveAsignatura);
+        txtGrupo.setText(claveGrupo);
+        txtcodigoGrupo.setText(codigoAsignatura);
     }
 
-
-
-    private void clicEst2() {
-        Intent intent = new Intent(this, EvalAtributtes.class);
-        startActivity(intent);
-    }
-
-    private void clicEst1() {
-        Intent intent = new Intent(this, EvalAtributtes.class);
-        startActivity(intent);
-    }
-    private void clicEst3() {
-        Intent intent = new Intent(this, EvalAtributtes.class);
-        startActivity(intent);
-    }
-    private void clicEst4() {
-        Intent intent = new Intent(this, EvalAtributtes.class);
-        startActivity(intent);
-    }
-
-         */
-    }
 }

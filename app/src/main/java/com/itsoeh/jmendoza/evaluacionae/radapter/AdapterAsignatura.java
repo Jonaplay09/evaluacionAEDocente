@@ -51,27 +51,14 @@ public class AdapterAsignatura extends RecyclerView.Adapter<AdapterAsignatura.Vi
     public void onBindViewHolder(@NonNull AdapterAsignatura.ViewHolderAsignatura holder, int position) {
         holder.setDatos(lista.get(position));
         holder.itemClick.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v){
-        clicItem(v, position);
-        }
+            @Override
+            public void onClick(View v){
+                holder.clicItem();
+            }
         });
-        //holder.imgEditar.setOnClickListener(new View.OnClickListener() {
-          //  @Override
-            //public void onClick(View v) {
-              //  clicEditar(v, position);
-           // }
-        //});
     }
-    private void clicItem(View view, int position) {
-        Bundle datos = new Bundle();
-        MAsignatura u = lista.get(position);
-        datos.putInt("id", u.getIdAsignatura());
-        datos.putString("asig", u.getAsignatura());
-        datos.putString("clavasig", u.getClaveAsignatura());
-        datos.putString("grupo",  u.getClaveGrupo());
-        datos.putInt("doc",  u.getIdDocente());
-    }
+
+
 
     public void updateData(ArrayList<MAsignatura> newList) {
         this.lista = newList;
@@ -109,13 +96,14 @@ public class AdapterAsignatura extends RecyclerView.Adapter<AdapterAsignatura.Vi
             emptyView = itemView.findViewById(R.id.tv_empty);
             txtAsignatura=itemView.findViewById(R.id.itemasig_txt_nombre);
             txtCreditos=itemView.findViewById(R.id.itemasig_txt_clavegru);
+            itemClick= itemView.findViewById(R.id.itemasig_item_click);
             itemClick.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     clicItem();
                 }
             });
-            itemClick= itemView.findViewById(R.id.itemasig_item_click);
+
             /* imgVer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -127,9 +115,19 @@ public class AdapterAsignatura extends RecyclerView.Adapter<AdapterAsignatura.Vi
 
         }
 
+      //  private void clicItem() {
+        //    Context context = itemView.getContext();
+          //  Intent intent = new Intent(context, EstudianteSelection.class);
+            //context.startActivity(intent);
+        //}
         private void clicItem() {
             Context context = itemView.getContext();
             Intent intent = new Intent(context, EstudianteSelection.class);
+            // Agrega los datos al Intent
+            intent.putExtra("asignatura", m.getAsignatura());
+            intent.putExtra("claveAsignatura", m.getClaveAsignatura());
+            intent.putExtra("claveGrupo", m.getClaveGrupo());
+            intent.putExtra("codigoAsignatura", m.getCodigoAsignatura());
             context.startActivity(intent);
         }
 
