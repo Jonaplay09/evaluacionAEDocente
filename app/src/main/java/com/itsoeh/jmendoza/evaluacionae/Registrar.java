@@ -1,9 +1,13 @@
 package com.itsoeh.jmendoza.evaluacionae;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,6 +78,7 @@ public class Registrar extends AppCompatActivity {
                 startActivity(brinco);
             }catch(Exception e){
                 Toast.makeText(Registrar.this, "Falló el registro", Toast.LENGTH_SHORT).show();
+                 Log.d(TAG,e.toString());
             }
         }
     }

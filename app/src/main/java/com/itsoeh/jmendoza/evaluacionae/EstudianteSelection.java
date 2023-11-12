@@ -12,13 +12,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.itsoeh.jmendoza.evaluacionae.accesoADatos.AEstudiante;
 import com.itsoeh.jmendoza.evaluacionae.models.MAsignatura;
+import com.itsoeh.jmendoza.evaluacionae.models.MEstudiante;
 import com.itsoeh.jmendoza.evaluacionae.radapter.AdapterAsignatura;
+import com.itsoeh.jmendoza.evaluacionae.radapter.AdapterEstudiante;
 
 import java.util.ArrayList;
 
 public class EstudianteSelection extends AppCompatActivity {
     private TextView txtMateria, txtAsignat, txtGrupo, txtcodigoGrupo, txtAtributo;
+    private Button btnBack;
     private RecyclerView recLista;
     private NavController nav;
     private ArrayList<MAsignatura> lista;
@@ -33,6 +37,14 @@ public class EstudianteSelection extends AppCompatActivity {
         txtAsignat = findViewById(R.id.student_select_txt_claveAsig);
         txtGrupo = findViewById(R.id.student_select_txt_claveGrupo);
         txtcodigoGrupo = findViewById(R.id.student_select_txt_codiGrupo);
+        recLista = findViewById(R.id.student_select_rec_lista);
+        btnBack = findViewById(R.id.studnet_select_btn__back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         // Obtiene los datos del Intent
         Intent intent = getIntent();
@@ -46,6 +58,10 @@ public class EstudianteSelection extends AppCompatActivity {
         txtAsignat.setText(claveAsignatura);
         txtGrupo.setText(claveGrupo);
         txtcodigoGrupo.setText(codigoAsignatura);
+        AEstudiante u = new AEstudiante(this);
+        ArrayList<MEstudiante> lista = u.listar();
+        AdapterEstudiante adapter = new AdapterEstudiante(lista);
+        recLista.setAdapter(adapter);
     }
 
 }

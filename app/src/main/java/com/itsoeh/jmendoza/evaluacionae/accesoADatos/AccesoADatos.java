@@ -1,5 +1,6 @@
 package com.itsoeh.jmendoza.evaluacionae.accesoADatos;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -46,6 +47,7 @@ public class AccesoADatos extends SQLiteOpenHelper {
                 "correo TEXT,"+
                 "matricula TEXT UNIQUE)");
 
+
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS estudiante_asignatura("+
                 "idEstudiante INTEGER," +
                 "codigoAsignatura TEXT," +
@@ -68,7 +70,10 @@ public class AccesoADatos extends SQLiteOpenHelper {
                 "calificacion INTEGER,"+
                 "FOREIGN KEY (idEstudiante) REFERENCES estudiante(idEstudiante)," +
                 "FOREIGN KEY (idCriterio) REFERENCES criteriosEval(idCriterio))");
+        
     }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {

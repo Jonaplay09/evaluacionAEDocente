@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_margin="7sp"
+        android:gravity="start">
+
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Jonatan Emmanuel Cornejo Mendoza"
+       android:fontFamily="@font/cairo_light"
+       android:id="@+id/item_alumno_nombre"
+       android:textSize="16sp"
+       >
+   </TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="7sp"
+        android:gravity="end">
+    <Button
+        android:layout_width="100sp"
+        android:layout_height="35sp"
+        android:layout_marginLeft="15dp"
+        android:text="Seleccionar"
+        android:id="@+id/btn_itmEst_seleccionar"
+        android:background="@drawable/degradado_blue2"
+        android:fontFamily="@font/cairo_light"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="12sp">
+    </Button>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

@@ -83,7 +83,7 @@ public class AdapterAsignatura extends RecyclerView.Adapter<AdapterAsignatura.Vi
     }
 
     public class ViewHolderAsignatura extends RecyclerView.ViewHolder {
-        private TextView txtAsignatura, txtCreditos, txtDocente;
+        private TextView txtAsignatura, txtClaveGrupo, txtDocente;
         private ImageView imvGenero;
         private CardView crvCont;
         private Bitmap userm, userw;
@@ -95,7 +95,7 @@ public class AdapterAsignatura extends RecyclerView.Adapter<AdapterAsignatura.Vi
             imgVer=itemView.findViewById(R.id.itemasig_img_asig);
             emptyView = itemView.findViewById(R.id.tv_empty);
             txtAsignatura=itemView.findViewById(R.id.itemasig_txt_nombre);
-            txtCreditos=itemView.findViewById(R.id.itemasig_txt_clavegru);
+            txtClaveGrupo=itemView.findViewById(R.id.itemasig_txt_clavegru);
             itemClick= itemView.findViewById(R.id.itemasig_item_click);
             itemClick.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -148,7 +148,7 @@ public class AdapterAsignatura extends RecyclerView.Adapter<AdapterAsignatura.Vi
             this.m=m;
             if(m!=null){
                 txtAsignatura.setText(m.getAsignatura());
-                txtCreditos.setText(m.getClaveGrupo());
+                txtClaveGrupo.setText(m.getClaveGrupo());
             }
         }
     }

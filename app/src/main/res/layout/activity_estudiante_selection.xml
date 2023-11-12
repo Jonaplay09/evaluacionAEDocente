@@ -43,7 +43,7 @@ Descripción: Layout de fragment calific est
                     android:orientation="vertical">
                 <Button
                     android:onClick="ViewLogin"
-                    android:id="@+id/estselect_btn__back"
+                    android:id="@+id/studnet_select_btn__back"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="15dp"
@@ -152,7 +152,7 @@ Descripción: Layout de fragment calific est
                         android:layout_weight="3"
                         android:layout_marginRight="15sp"
                         android:layout_marginLeft="15sp"
-                        android:id="@+id/asignaturas_rec_lista"
+                        android:id="@+id/student_select_rec_lista"
                         android:scrollbarStyle="insideOverlay"
                         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                         />

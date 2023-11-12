@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.itsoeh.jmendoza.evaluacionae.accesoADatos.AAsignatura;
 import com.itsoeh.jmendoza.evaluacionae.accesoADatos.ADocente;
+import com.itsoeh.jmendoza.evaluacionae.accesoADatos.AEstudiante;
 import com.itsoeh.jmendoza.evaluacionae.models.MAsignatura;
 import com.itsoeh.jmendoza.evaluacionae.models.MDocente;
 
@@ -69,6 +70,8 @@ public class Asignatura extends AppCompatActivity {
                 m.setClaveAsignatura(txtClaveAsignatura.getText().toString());
                 m.setClaveGrupo(txtClaveGrupo.getText().toString());
                 m.setCodigoAsignatura(generarCodigo());
+                AEstudiante e = new AEstudiante(this);
+                e.insertarEstudiantes();
                 g.guardar(m);
                 Toast.makeText(Asignatura.this, "Se realizó correctamente el registro", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MainActivity.class);
