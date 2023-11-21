@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Fecha: 13/09/2023
+Autor: Jonatan Emmanuel Cornejo Mendoza
+Descripción: Layout de fragment calific est
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AsignarAtributo">
+
+
+    <LinearLayout
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/fondo_login">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="30dp"
+                android:layout_gravity="center"
+                android:backgroundTint="#F6F6F6"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="20dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <Button
+                        android:onClick="ViewLogin"
+                        android:id="@+id/asig_atributo_btn__back"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/ic_arrow_left"
+                        tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/boton_asi"
+                        android:layout_marginRight="15sp"
+                        android:layout_marginLeft="15sp"
+                        android:layout_marginTop="5sp"
+                        android:gravity="center">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5sp"
+    android:layout_marginRight="5sp"
+    android:layout_marginTop="5sp"
+    android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:layout_marginRight="5sp"
+                            android:id="@+id/asig_atributo_txt_materia"
+                            android:text="Nombre del Atributo"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textSize="20sp"
+                            android:layout_gravity="start"
+                            android:textColor="#000">
+                        </TextView>
+    <LinearLayout
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nivel:"
+            android:fontFamily="@font/cairo_light"
+            android:textColor="@color/black"
+            android:textSize="14.5sp"></TextView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/spinners_gray"
+            android:layout_marginLeft="3sp">
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/asig_atributo_sp_Nivel"
+            android:entries="@array/niveles">
+        </Spinner>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginBottom="10sp">
+    <Button
+        android:id="@+id/asig_atributo_btn_descripcion"
+        android:layout_width="70dp"
+        android:layout_height="25dp"
+        android:text="Descripción"
+        android:fontFamily="@font/cairo_light"
+        android:textAllCaps="false"
+        android:background="@drawable/degradado_blue_mcornerpadd"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        android:layout_margin="10sp"
+        android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/student_select_txt_claveAsig"
+                            android:text="Meta:"
+                            android:fontFamily="@font/cairo_light"
+                            android:layout_marginTop="10sp"
+                            android:layout_marginLeft="30sp"
+                            android:layout_marginRight="5sp"
+                            android:textColor="@color/black"
+                            android:textSize="14.5sp"></TextView>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spinners_gray"
+        android:text="80"
+        android:layout_marginTop="10sp"
+        android:padding="3sp"
+        android:textSize="10sp"
+        android:fontFamily="@font/cairo_light"></EditText>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/student_select_txt_claveGrupo"
+                            android:text="Logro:"
+                            android:layout_marginTop="10sp"
+                            android:layout_marginLeft="30sp"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/cairo_light"
+                            android:textSize="14.5sp"></TextView>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spinners_gray"
+        android:text="40"
+        android:padding="3sp"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="5sp"
+        android:textSize="10sp"
+        android:fontFamily="@font/cairo_light"></EditText>
+</LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginLeft="15sp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Criterios"
+                            android:fontFamily="@font/cairo_light"
+                            android:textSize="16sp">
+                        </TextView>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="4sp"
+                        android:background="@color/blue_line"
+                        android:layout_marginLeft="15sp"
+                        android:layout_marginRight="15sp">
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15sp"
+                        android:orientation="vertical">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="0sp"
+                            android:layout_weight="3"
+                            android:layout_marginRight="15sp"
+                            android:layout_marginLeft="15sp"
+                            android:id="@+id/student_select_rec_lista"
+                            android:scrollbarStyle="insideOverlay"
+                            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                            />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0sp"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.5">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="4sp"
+                                android:background="@color/blue_line"
+                                android:layout_marginLeft="15sp"
+                                android:layout_marginRight="15sp">
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:layout_marginRight="10sp"
+                                android:layout_marginBottom="10sp">
+                                <Button
+                                    android:id="@+id/asig_atributo_btn_asignar"
+                                    android:layout_width="250dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Asignar Atributo"
+                                    android:fontFamily="@font/cairo_light"
+                                    android:layout_gravity="center"
+                                    android:textAllCaps="false"
+                                    android:background="@drawable/degradado_blue_mcornerpadd"
+                                    android:textColor="@color/white"
+                                    android:textSize="18sp"
+                                    android:layout_margin="10sp"
+                                    android:textStyle="bold" />
+
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -84,6 +84,7 @@ Descripción: Layout de fragment cambiar correo
                         android:id="@+id/chaemail_txt_oldemail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
                         android:hint="Correo Electrónico Anterior"
                         android:layout_marginTop="50dp" />
                     <EditText
@@ -91,6 +92,7 @@ Descripción: Layout de fragment cambiar correo
                         android:id="@+id/chaemail_txt_newemail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
                         android:hint="Nuevos Correo Electrónico"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="50sp"/>

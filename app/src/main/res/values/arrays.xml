@@ -59,4 +59,9 @@
     <item>Tópicos de Desarrollo Web</item>
     <item>Analítica de Datos</item>
     </string-array>
+    <string-array name="niveles">
+        <item>I</item>
+        <item>M</item>
+        <item>A</item>
+    </string-array>
 </resources>

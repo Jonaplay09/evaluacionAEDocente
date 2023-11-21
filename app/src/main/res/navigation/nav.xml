@@ -122,4 +122,5 @@
             android:id="@+id/action_about_to_configuracion"
             app:destination="@id/Configuracion" />
     </fragment>
+
 </navigation>

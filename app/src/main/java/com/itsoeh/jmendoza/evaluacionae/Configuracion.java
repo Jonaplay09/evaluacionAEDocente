@@ -135,7 +135,7 @@ public class Configuracion extends Fragment {
         Intent intent = new Intent(getActivity(), Login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        getActivity().finishAffinity(); // Cierra todas las otras actividades
+        getActivity().finishAffinity();
     }
 
 }

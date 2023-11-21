@@ -56,4 +56,55 @@ public class ADocente extends AccesoADatos {
         }else
             return null;
     }
+    public boolean actualizarCorreo(String correoAntiguo, String correoNuevo){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor reg = db.rawQuery("SELECT * FROM docente WHERE correo = '"+correoAntiguo+"'",null);
+        if (reg.getCount()!=0){
+            db.execSQL("UPDATE docente SET correo = '"+correoNuevo+"' WHERE correo = '"+correoAntiguo+"'");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public boolean actualizarNombre(int idDocente, String nombreNuevo, String apellidosNuevo){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor reg = db.rawQuery("SELECT * FROM docente WHERE idDocente = "+idDocente, null);
+        if (reg.getCount()!=0){
+            db.execSQL("UPDATE docente SET nombre = '"+nombreNuevo+"', apellidos = '"+apellidosNuevo+"' WHERE idDocente = "+idDocente);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public int obtenerIdDocente(String correo){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor reg = db.rawQuery("SELECT idDocente FROM docente WHERE correo = '"+correo+"'",null);
+        if (reg.moveToFirst()){
+            return reg.getInt(0);
+        } else {
+            return -1;
+        }
+
+    }
+
+    public boolean actualizarPassword(int idDocente, String passwordAntiguo, String passwordNuevo){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor reg = db.rawQuery("SELECT * FROM docente WHERE idDocente = "+idDocente+" AND password = '"+passwordAntiguo+"'", null);
+        if (reg.getCount()!=0){
+            db.execSQL("UPDATE docente SET password = '"+passwordNuevo+"' WHERE idDocente = "+idDocente);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
+
+
 }

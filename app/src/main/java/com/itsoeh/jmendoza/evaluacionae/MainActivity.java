@@ -52,12 +52,15 @@ public class MainActivity extends AppCompatActivity
                         .replace(R.id.fragmentContainerView, configuracion)
                         .commit();
                 return true;
-            case R.id.atributes_evaluate:
+
+          /*  case R.id.atributes_evaluate:
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragmentContainerView, evaluaratributos)
                         .commit();
                 return true;
+
+           */
 
                 case R.id.asignaturas:
                 getSupportFragmentManager()

@@ -12,7 +12,7 @@ public class MDocente {
     public MDocente() {
     }
 
-    public MDocente(int idDocente, String nombre, String apellidos, String correo, String matricula, int celular, String password) {
+    public MDocente(int idDocente, String nombre, String apellidos, String correo, String matricula, int celular,String password) {
         this.idDocente = idDocente;
         this.nombre = nombre;
         this.apellidos = apellidos;
