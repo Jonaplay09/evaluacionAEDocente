@@ -3,10 +3,13 @@ package com.itsoeh.jmendoza.evaluacionae;
 import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
@@ -104,48 +107,67 @@ public class Registrar extends AppCompatActivity {
                     if(password.length() >= 8) {
                         if (password.equals(passwordConf)) {
                             try {
-                                ADocente g = new ADocente(this);
-                                MDocente m = new MDocente();
-                                m.setNombre(txtNombre.getText().toString());
-                                m.setApellidos(txtApellido.getText().toString());
-                                m.setCorreo(txtCorreo.getText().toString());
-                                m.setMatricula(txtMatricula.getText().toString());
-                                m.setPassword(password);
-                                g.guardar(m);
-                                RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(this).getRequestQueue();
-                                StringRequest solicitud = new StringRequest(Request.Method.POST, Api.GUARDAR, new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        try {
-                                            JSONObject respuesta = new JSONObject(response);
-                                            Toast.makeText(Registrar.this, "Se realizó correctamente el registro", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(Registrar.this, Login.class);
-                                            startActivity(intent);
-                                        } catch (JSONException e) {
-                                            Toast.makeText(Registrar.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                            Log.d(TAG, ""+e.getMessage());
+                                if (isConnectedToInternet()) {
+                                    ADocente g = new ADocente(this);
+                                    MDocente m = new MDocente();
+                                    m.setNombre(txtNombre.getText().toString());
+                                    m.setApellidos(txtApellido.getText().toString());
+                                    m.setCorreo(txtCorreo.getText().toString());
+                                    m.setMatricula(txtMatricula.getText().toString());
+                                    m.setPassword(password);
+                                    g.guardar(m);
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.GUARDAR, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                Toast.makeText(Registrar.this, "Se realizó correctamente el registro", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(Registrar.this, Login.class);
+                                                startActivity(intent);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(Registrar.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
                                         }
-                                    }
-                                }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        Toast.makeText(Registrar.this, "Falló el registro"+error.getMessage(), Toast.LENGTH_SHORT).show();
-                                        Log.d(TAG, ""+error.getMessage());
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(Registrar.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
 
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("nombre", txtNombre.getText().toString());
+                                            parametros.put("apellidos", txtApellido.getText().toString());
+                                            parametros.put("correo", txtCorreo.getText().toString());
+                                            parametros.put("matricula", txtMatricula.getText().toString());
+                                            parametros.put("password", txtPassword.getText().toString());
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }else{
+                                    try {
+                                        ADocente g = new ADocente(this);
+                                        MDocente m = new MDocente();
+                                        m.setNombre(txtNombre.getText().toString());
+                                        m.setApellidos(txtApellido.getText().toString());
+                                        m.setCorreo(txtCorreo.getText().toString());
+                                        m.setMatricula(txtMatricula.getText().toString());
+                                        m.setPassword(password);
+                                        g.guardar(m);
+                                        Toast.makeText(Registrar.this, "Se realizó correctamente el registro", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(Registrar.this, Login.class);
+                                        startActivity(intent);
+                                    }catch(Exception error){
+                                        Toast.makeText(Registrar.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG, "" + error.getMessage());
                                     }
-                                }){
-                                    @Override
-                                    protected Map<String, String> getParams(){
-                                        Map<String, String> parametros = new HashMap<String, String>();
-                                        parametros.put("nombre", txtNombre.getText().toString());
-                                        parametros.put("apellidos", txtApellido.getText().toString());
-                                        parametros.put("correo", txtCorreo.getText().toString());
-                                        parametros.put("matricula", txtMatricula.getText().toString());
-                                        parametros.put("password", txtPassword.getText().toString());
-                                        return parametros;
-                                    }
-                                };
-                                colaDeSolicitudes.add(solicitud);
+                                }
                             } catch (Exception e) {
                                 Toast.makeText(Registrar.this, "Falló el registro" +e.getMessage(), Toast.LENGTH_SHORT).show();
                                 Log.d(TAG, e.toString());
@@ -294,5 +316,10 @@ public class Registrar extends AppCompatActivity {
     private void clicBack() {
         Intent brinco = new Intent(this, Login.class);
         startActivity(brinco);
+    }
+    public boolean isConnectedToInternet(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 }

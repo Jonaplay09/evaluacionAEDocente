@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +15,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.itsoeh.jmendoza.evaluacionae.accesoADatos.ADocente;
+import com.itsoeh.jmendoza.evaluacionae.accesoADatos.Api;
+import com.itsoeh.jmendoza.evaluacionae.accesoADatos.VolleySingleton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class CambiarNombre extends AppCompatActivity {
@@ -42,88 +56,141 @@ public class CambiarNombre extends AppCompatActivity {
                 String nombreNuevo = txtNombre.getText().toString();
                 String apellidosNuevo = txtApellidos.getText().toString();
                 if (nombreNuevo.equals("") || apellidosNuevo.equals("")) {
-                    if (Pattern.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", nombreNuevo)) {
-                        if (Pattern.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", apellidosNuevo)) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(CambiarNombre.this);
-                            LayoutInflater inflater = CambiarNombre.this.getLayoutInflater();
-                            View dialogView = inflater.inflate(R.layout.dialog_layout, null);
-                            builder.setView(dialogView);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CambiarNombre.this);
+                    LayoutInflater inflater = CambiarNombre.this.getLayoutInflater();
+                    View dialogView = inflater.inflate(R.layout.dialog_layout, null);
+                    builder.setView(dialogView);
 
-                            AlertDialog dialog = builder.create();
+                    AlertDialog dialog = builder.create();
 
-                            TextView title = dialogView.findViewById(R.id.title);
-                            title.setText("Ocurrió un error");
-                            TextView message = dialogView.findViewById(R.id.message);
-                            message.setText("Completa los datos requeridos");
-                            Button button = dialogView.findViewById(R.id.button);
-                            button.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            dialog.show();
-                        }else{
-                            AlertDialog.Builder builder = new AlertDialog.Builder(CambiarNombre.this);
-                            LayoutInflater inflater = CambiarNombre.this.getLayoutInflater();
-                            View dialogView = inflater.inflate(R.layout.dialog_layout, null);
-                            builder.setView(dialogView);
-
-                            AlertDialog dialog = builder.create();
-
-                            TextView title = dialogView.findViewById(R.id.title);
-                            title.setText("Ocurrió un error");
-                            TextView message = dialogView.findViewById(R.id.message);
-                            message.setText("Formato de apellidos incorrecto");
-                            Button button = dialogView.findViewById(R.id.button);
-                            button.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            dialog.show();
-
+                    TextView title = dialogView.findViewById(R.id.title);
+                    title.setText("Ocurrió un error");
+                    TextView message = dialogView.findViewById(R.id.message);
+                    message.setText("Completa los datos requeridos");
+                    Button button = dialogView.findViewById(R.id.button);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
                         }
-                        }else{
-                        AlertDialog.Builder builder = new AlertDialog.Builder(CambiarNombre.this);
-                        LayoutInflater inflater = CambiarNombre.this.getLayoutInflater();
-                        View dialogView = inflater.inflate(R.layout.dialog_layout, null);
-                        builder.setView(dialogView);
+                    });
+                    dialog.show();
+                } else {
+                    if (isConnectedToInternet()) {
+                        if (Pattern.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", nombreNuevo)) {
+                            if (Pattern.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", apellidosNuevo)) {
+                                SharedPreferences sharedPref = getSharedPreferences("user_data", Context.MODE_PRIVATE);
+                                int idDocente = sharedPref.getInt("idDocente", -1);
+                                RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(CambiarNombre.this).getRequestQueue();
+                                StringRequest solicitud = new StringRequest(Request.Method.POST, Api.ACTUALIZAR_NOMBRE, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        try {
+                                            JSONObject respuesta = new JSONObject(response);
+                                            if (!respuesta.getBoolean("error")) {
+                                                actualizarLocal();
+                                                Toast.makeText(CambiarNombre.this, "Nombre actualizado a: " + nombreNuevo + " " + apellidosNuevo, Toast.LENGTH_SHORT).show();
+                                                finish();
+                                            } else {
+                                                Toast.makeText(CambiarNombre.this, respuesta.getString("message"), Toast.LENGTH_SHORT).show();
+                                            }
+                                        } catch (JSONException e) {
+                                            Toast.makeText(CambiarNombre.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Toast.makeText(CambiarNombre.this, "Ocurrió un error", Toast.LENGTH_SHORT).show();
+                                    }
+                                }) {
+                                    @Override
+                                    protected Map<String, String> getParams() {
+                                        Map<String, String> parametros = new HashMap<String, String>();
+                                        parametros.put("idDocente", Integer.toString(idDocente));
+                                        parametros.put("nombreNuevo", nombreNuevo);
+                                        parametros.put("apellidosNuevo", apellidosNuevo);
+                                        return parametros;
+                                    }
+                                };
+                                colaDeSolicitudes.add(solicitud);
 
-                        AlertDialog dialog = builder.create();
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(CambiarNombre.this);
+                                LayoutInflater inflater = CambiarNombre.this.getLayoutInflater();
+                                View dialogView = inflater.inflate(R.layout.dialog_layout, null);
+                                builder.setView(dialogView);
 
-                        TextView title = dialogView.findViewById(R.id.title);
-                        title.setText("Ocurrió un error");
-                        TextView message = dialogView.findViewById(R.id.message);
-                        message.setText("Formato de nombre incorrecto");
-                        Button button = dialogView.findViewById(R.id.button);
-                        button.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
+                                AlertDialog dialog = builder.create();
+
+                                TextView title = dialogView.findViewById(R.id.title);
+                                title.setText("Ocurrió un error");
+                                TextView message = dialogView.findViewById(R.id.message);
+                                message.setText("Formato de apellidos incorrecto");
+                                Button button = dialogView.findViewById(R.id.button);
+                                button.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                dialog.show();
                             }
-                        });
-                        dialog.show();
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(CambiarNombre.this);
+                            LayoutInflater inflater = CambiarNombre.this.getLayoutInflater();
+                            View dialogView = inflater.inflate(R.layout.dialog_layout, null);
+                            builder.setView(dialogView);
 
+                            AlertDialog dialog = builder.create();
+
+                            TextView title = dialogView.findViewById(R.id.title);
+                            title.setText("Ocurrió un error");
+                            TextView message = dialogView.findViewById(R.id.message);
+                            message.setText("Formato de nombre incorrecto");
+                            Button button = dialogView.findViewById(R.id.button);
+                            button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            dialog.show();
                         }
-                }else{
-                    SharedPreferences sharedPref = getSharedPreferences("user_data", Context.MODE_PRIVATE);
-                    int idDocente = sharedPref.getInt("idDocente", -1);
-                    ADocente aDocente = new ADocente(getApplicationContext());
-                    try {
-                        boolean actualizacionExitosa = aDocente.actualizarNombre(idDocente, nombreNuevo, apellidosNuevo);
-                        if (actualizacionExitosa) {
-                            Toast.makeText(CambiarNombre.this, "Nombre actualizado a: " + nombreNuevo + " " + apellidosNuevo, Toast.LENGTH_SHORT).show();
-                            finish();
+                    } else {
+                        SharedPreferences sharedPref = getSharedPreferences("user_data", Context.MODE_PRIVATE);
+                        int idDocente = sharedPref.getInt("idDocente", -1);
+                        ADocente aDocente = new ADocente(getApplicationContext());
+                        try {
+                            boolean actualizacionExitosa = aDocente.actualizarNombre(idDocente, nombreNuevo, apellidosNuevo);
+                            if (actualizacionExitosa) {
+                                Toast.makeText(CambiarNombre.this, "Nombre actualizado a: " + nombreNuevo + " " + apellidosNuevo, Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(CambiarNombre.this, "Ocurrió un error", Toast.LENGTH_SHORT).show();
                         }
-                    }catch(Exception e){
-                        Toast.makeText(CambiarNombre.this, "Ocurrió un error", Toast.LENGTH_SHORT).show();
+
                     }
                 }
             }
         });
-
-
     }
-}
+
+    private void actualizarLocal() {
+        String nombreNuevo = txtNombre.getText().toString();
+        String apellidosNuevo = txtApellidos.getText().toString();
+        SharedPreferences sharedPref = getSharedPreferences("user_data", Context.MODE_PRIVATE);
+        int idDocente = sharedPref.getInt("idDocente", -1);
+        ADocente aDocente = new ADocente(getApplicationContext());
+        aDocente.actualizarNombre(idDocente, nombreNuevo, apellidosNuevo);
+    }
+
+
+    public boolean isConnectedToInternet(){
+                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                return networkInfo != null && networkInfo.isConnected();
+            }
+        }
+
