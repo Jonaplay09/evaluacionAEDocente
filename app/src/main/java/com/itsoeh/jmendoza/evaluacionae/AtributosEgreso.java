@@ -1,10 +1,14 @@
 package com.itsoeh.jmendoza.evaluacionae;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -24,6 +28,7 @@ import java.util.ArrayList;
 
 public class AtributosEgreso extends AppCompatActivity {
     private EditText txtBuscar;
+    private Button btnBack;
     private ImageButton btnAgregar;
     private RecyclerView recLista;
     private ArrayList<MAtributo> lista;
@@ -33,12 +38,23 @@ public class AtributosEgreso extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atributos_egreso);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
 
         //btnAgregar = findViewById(R.id.condoc_fbtn_agregar);
         //txtBuscar = findViewById(R.id.condoc_txtBusca);
         recLista = findViewById(R.id.atributos_egre_rec_lista);
         btnAgregar = findViewById(R.id.atributos_egre_add_button);
         TextView emptyView = findViewById(R.id.tv_empty);
+        btnBack= findViewById(R.id.atributos_egre_btn__back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         btnAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -21,6 +21,7 @@ Descripción: Layout de fragment cambiar correo
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:paddingTop="20sp"
         android:background="@drawable/fondo_login">
 
         <LinearLayout

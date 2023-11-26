@@ -11,12 +11,16 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.nfc.Tag;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +51,10 @@ public class Registrar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
         txtNombre = findViewById(R.id.registro_txt_nombre);
         txtApellido = findViewById(R.id.registro_txt_apellido);
         txtCorreo = findViewById(R.id.registro_txt_correo);
@@ -81,13 +89,11 @@ public class Registrar extends AppCompatActivity {
             LayoutInflater inflater = this.getLayoutInflater();
             View view = inflater.inflate(R.layout.dialog_layout, null);
             builder.setView(view);
-
             AlertDialog dialog = builder.create();
-
             TextView title = view.findViewById(R.id.title);
             title.setText("Ocurrió un error");
             TextView message = view.findViewById(R.id.message);
-            message.setText("Por favor asegurese de haber llenado todos los datos requeridos");
+            message.setText("Faltan campos por llenar");
             Button button = view.findViewById(R.id.button);
 
             button.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +109,7 @@ public class Registrar extends AppCompatActivity {
             if (Pattern.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", nombre)) {
                 if (Pattern.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", apellido)) {
                     if (Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d:,.!?@°]+$", password)) {
-                if (Pattern.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", correo)) {
+                        if (Pattern.matches("^[a-zA-Z0-9._%+-]+@itsoeh\\.edu\\.mx\\s*$", correo)) {
                     if(password.length() >= 8) {
                         if (password.equals(passwordConf)) {
                             try {
@@ -227,9 +233,9 @@ public class Registrar extends AppCompatActivity {
                     AlertDialog dialog = builder.create();
 
                     TextView title = view.findViewById(R.id.title);
-                    title.setText("Ocurrió un error");
+                    title.setText("El correo no pertenece al dominio itsoeh");
                     TextView message = view.findViewById(R.id.message);
-                    message.setText("El formato de correo electrónico no es correcto");
+                    message.setText("Por favor utiliza un correo de dominio itsoeh");
                     Button button = view.findViewById(R.id.button);
 
                     button.setOnClickListener(new View.OnClickListener() {
@@ -312,7 +318,6 @@ public class Registrar extends AppCompatActivity {
             }
         }
     }
-
     private void clicBack() {
         Intent brinco = new Intent(this, Login.class);
         startActivity(brinco);

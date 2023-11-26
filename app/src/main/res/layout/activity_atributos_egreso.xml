@@ -9,13 +9,14 @@ Descripción: Layout de fragment asignaturas
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EstudianteSelection">
+    tools:context=".AtributosEgreso">
 
 
     <LinearLayout
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="20sp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -23,19 +24,20 @@ Descripción: Layout de fragment asignaturas
         android:background="@drawable/fondo_login">
 
         <LinearLayout
-            android:gravity="center"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:background="@drawable/fondo_menu">
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="30dp"
+                android:layout_margin="5dp"
                 android:layout_gravity="center"
                 android:backgroundTint="#F6F6F6"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="20dp">
+                app:cardCornerRadius="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"

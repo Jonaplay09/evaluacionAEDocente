@@ -10,10 +10,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,6 +36,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class CambiarCorreo extends AppCompatActivity {
 
@@ -43,6 +47,10 @@ public class CambiarCorreo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cambiar_correo);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
         btn_back = findViewById(R.id.chaemail_btn_back);
         btnGuardarCambios = findViewById(R.id.chaemail_btn_guardar);
         txtOldEmail = findViewById(R.id.chaemail_txt_oldemail);
@@ -56,30 +64,37 @@ public class CambiarCorreo extends AppCompatActivity {
         btnGuardarCambios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String correoAntiguo = txtOldEmail.getText().toString();
-                String correoNuevo = txtNewEmail.getText().toString();
-                if (correoAntiguo.equals("") || correoNuevo.equals("")) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(CambiarCorreo.this);
-                    LayoutInflater inflater = CambiarCorreo.this.getLayoutInflater();
-                    View dialogView = inflater.inflate(R.layout.dialog_layout, null);
-                    builder.setView(dialogView);
+               clickGuardarCambios();
+            }
+        });
+    }
 
-                    AlertDialog dialog = builder.create();
+    private void clickGuardarCambios() {
+        String correoAntiguo = txtOldEmail.getText().toString();
+        String correoNuevo = txtNewEmail.getText().toString();
+        if (correoAntiguo.equals("") || correoNuevo.equals("")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(CambiarCorreo.this);
+            LayoutInflater inflater = CambiarCorreo.this.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_layout, null);
+            builder.setView(dialogView);
 
-                    TextView title = dialogView.findViewById(R.id.title);
-                    title.setText("Ocurrió un error");
-                    TextView message = dialogView.findViewById(R.id.message);
-                    message.setText("Completa los datos requeridos");
-                    Button button = dialogView.findViewById(R.id.button);
-                    button.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                        }
-                    });
+            AlertDialog dialog = builder.create();
 
-                    dialog.show();
-                } else {
+            TextView title = dialogView.findViewById(R.id.title);
+            title.setText("Ocurrió un error");
+            TextView message = dialogView.findViewById(R.id.message);
+            message.setText("Completa los datos requeridos");
+            Button button = dialogView.findViewById(R.id.button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        } else {
+            if (Pattern.matches("^[a-zA-Z0-9._%+-]+@itsoeh\\.edu\\.mx\\s*$", correoAntiguo)) {
+                if (Pattern.matches("^[a-zA-Z0-9._%+-]+@itsoeh\\.edu\\.mx\\s*$", correoNuevo)) {
                     if (isConnectedToInternet()) {
                         ADocente aDocente = new ADocente(getApplicationContext());
                         SharedPreferences sharedPref = getSharedPreferences("user_data", Context.MODE_PRIVATE);
@@ -127,7 +142,25 @@ public class CambiarCorreo extends AppCompatActivity {
                             }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Toast.makeText(CambiarCorreo.this, "Falló la actualización del correo: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(CambiarCorreo.this);
+                                        LayoutInflater inflater = CambiarCorreo.this.getLayoutInflater();
+                                        View dialogView = inflater.inflate(R.layout.dialog_layout, null);
+                                        builder.setView(dialogView);
+
+                                        AlertDialog dialog = builder.create();
+                                        TextView title = dialogView.findViewById(R.id.title);
+                                        title.setText("Ocurrió un error");
+                                        TextView message = dialogView.findViewById(R.id.message);
+                                        message.setText("No se pudo actualizar el correo, verifica los campos");
+                                        Button button = dialogView.findViewById(R.id.button);
+                                        button.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                        dialog.show();
                                 }
                             }) {
                                 @Override
@@ -160,8 +193,7 @@ public class CambiarCorreo extends AppCompatActivity {
 
                             dialog.show();
                         }
-
-                    }else{
+                    } else {
                         ADocente aDocente = new ADocente(getApplicationContext());
                         SharedPreferences sharedPref = getSharedPreferences("user_data", Context.MODE_PRIVATE);
                         String correoAlmacenado = sharedPref.getString("email", "");
@@ -187,7 +219,7 @@ public class CambiarCorreo extends AppCompatActivity {
                                 });
 
                                 dialog.show();
-                            }else{
+                            } else {
                                 Toast.makeText(CambiarCorreo.this, "Correo actualizado exitosamente", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(CambiarCorreo.this, Login.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -215,9 +247,53 @@ public class CambiarCorreo extends AppCompatActivity {
                             dialog.show();
                         }
                     }
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    LayoutInflater inflater = this.getLayoutInflater();
+                    View view = inflater.inflate(R.layout.dialog_layout, null);
+                    builder.setView(view);
+
+                    AlertDialog dialog = builder.create();
+
+                    TextView title = view.findViewById(R.id.title);
+                    title.setText("El correo no pertenece al dominio itsoeh");
+                    TextView message = view.findViewById(R.id.message);
+                    message.setText("Por favor utiliza un correo de dominio itsoeh");
+                    Button button = view.findViewById(R.id.button);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    dialog.show();
+
                 }
+            }else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                LayoutInflater inflater = this.getLayoutInflater();
+                View view = inflater.inflate(R.layout.dialog_layout, null);
+                builder.setView(view);
+
+                AlertDialog dialog = builder.create();
+
+                TextView title = view.findViewById(R.id.title);
+                title.setText("El correo no pertenece al dominio itsoeh");
+                TextView message = view.findViewById(R.id.message);
+                message.setText("Por favor utiliza un correo de dominio itsoeh");
+                Button button = view.findViewById(R.id.button);
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
             }
-        });
+        }
     }
 
     private void actualizarLocal() {

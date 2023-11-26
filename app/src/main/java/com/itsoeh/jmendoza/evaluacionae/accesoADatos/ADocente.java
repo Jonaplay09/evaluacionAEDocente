@@ -1,5 +1,6 @@
 package com.itsoeh.jmendoza.evaluacionae.accesoADatos;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -101,6 +102,15 @@ public class ADocente extends AccesoADatos {
             return false;
         }
     }
+
+    public boolean actualizarPasswordSinVerificar(String correo, String passwordNuevo){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("password", passwordNuevo);
+        int filasActualizadas = db.update("docente", contentValues, "correo = ?", new String[]{String.valueOf(correo)});
+        return filasActualizadas > 0;
+    }
+
 
 
 

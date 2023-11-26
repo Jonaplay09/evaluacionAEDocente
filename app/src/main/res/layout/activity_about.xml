@@ -17,6 +17,7 @@ Descripción: Layout de fragment about
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:paddingTop="20sp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:background="@drawable/fondo_login">
@@ -26,12 +27,14 @@ Descripción: Layout de fragment about
             android:layout_height="match_parent"
             android:layout_margin="20dp"
             android:orientation="vertical"
+            android:layout_gravity="center"
             android:background="@drawable/fondo_menu">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:layout_gravity="center"
                 android:backgroundTint="#F6F6F6"
                 app:cardCornerRadius="20dp">
 

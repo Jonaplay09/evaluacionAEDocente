@@ -11,10 +11,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -49,17 +53,22 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
+
         btnEntrada = findViewById(R.id.login_btn_entrar);
         btnRegistro = findViewById(R.id.login_btn_registrar);
         txtUsuario = findViewById(R.id.login_txt_correo);
         txtPassword = findViewById(R.id.login_txt_contraseña);
-         txtForgot = (TextView) findViewById(R.id.login_btn_forgetPassword);
-         txtForgot.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 clicForgot();
-             }
-         });
+        txtForgot = (TextView) findViewById(R.id.login_btn_forgetPassword);
+        txtForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clicForgot();
+            }
+        });
         btnEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +107,7 @@ public class Login extends AppCompatActivity {
             TextView title = view.findViewById(R.id.title);
             title.setText("Correo y contraseña vacíos");
             TextView message = view.findViewById(R.id.message);
-            message.setText("Ingresa los datos solicitados");
+            message.setText("Faltan campos por llenar");
             Button button = view.findViewById(R.id.button);
 
             button.setOnClickListener(new View.OnClickListener() {
@@ -110,9 +119,9 @@ public class Login extends AppCompatActivity {
 
             dialog.show();
         }else{
-            if (Pattern.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", correo)) {
+            if (Pattern.matches("^[a-zA-Z0-9._%+-]+@itsoeh\\.edu\\.mx\\s*$", correo)) {
                 try {
-                        if (isConnectedToInternet()) {
+                    if (isConnectedToInternet()) {
 
                         RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(this).getRequestQueue();
                         StringRequest solicitud = new StringRequest(Request.Method.POST, Api.BUSCARCONTRASENIA, new Response.Listener<String>() {
@@ -139,7 +148,7 @@ public class Login extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(Login.this, "Falló la búsqueda de la contraseña"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                                alertDialogLog();
                             }
                         }){
                             @Override
@@ -151,10 +160,10 @@ public class Login extends AppCompatActivity {
                             }
                         };
                         colaDeSolicitudes.add(solicitud);
-                        } else {
-                            ADocente docente = new ADocente(this);
-                            String [] datos = docente.buscarContrasenia(correo, contraseña);
-                            if (datos != null) {
+                    } else {
+                        ADocente docente = new ADocente(this);
+                        String [] datos = docente.buscarContrasenia(correo, contraseña);
+                        if (datos != null) {
                             ADocente aDocente = new ADocente(getApplicationContext());
                             int idDocente = aDocente.obtenerIdDocente(correo);
                             SharedPreferences sharedPref = getSharedPreferences("user_data", Context.MODE_PRIVATE);
@@ -167,26 +176,26 @@ public class Login extends AppCompatActivity {
                             Intent brinco = new Intent(this, MainActivity.class);
                             startActivity(brinco);
                             Toast.makeText(Login.this, "Te has loggeado exitosamente", Toast.LENGTH_SHORT).show();
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        LayoutInflater inflater = this.getLayoutInflater();
-                        View view = inflater.inflate(R.layout.dialog_layout, null);
-                        builder.setView(view);
-                        AlertDialog dialog = builder.create();
-                        TextView title = view.findViewById(R.id.title);
-                        title.setText("Ocurrió un error");
-                        TextView message = view.findViewById(R.id.message);
-                        message.setText("El usuario o contraseña son incorrectos");
-                        Button button = view.findViewById(R.id.button);
-                        button.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
-                        dialog.show();
-                    }
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                            LayoutInflater inflater = this.getLayoutInflater();
+                            View view = inflater.inflate(R.layout.dialog_layout, null);
+                            builder.setView(view);
+                            AlertDialog dialog = builder.create();
+                            TextView title = view.findViewById(R.id.title);
+                            title.setText("Ocurrió un error");
+                            TextView message = view.findViewById(R.id.message);
+                            message.setText("El usuario o contraseña son incorrectos");
+                            Button button = view.findViewById(R.id.button);
+                            button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            dialog.show();
                         }
+                    }
                 } catch (Exception e) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     LayoutInflater inflater = this.getLayoutInflater();
@@ -217,7 +226,7 @@ public class Login extends AppCompatActivity {
                 TextView title = view.findViewById(R.id.title);
                 title.setText("Ocurrió un error");
                 TextView message = view.findViewById(R.id.message);
-                message.setText("El formato de correo es inválido");
+                message.setText("El correo electrónico no pertenece al dominio itsoeh o no esta registrado");
                 Button button = view.findViewById(R.id.button);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -229,6 +238,26 @@ public class Login extends AppCompatActivity {
 
             }
         }
+    }
+
+    private void alertDialogLog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_layout, null);
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        TextView title = view.findViewById(R.id.title);
+        title.setText("Ocurrió un error");
+        TextView message = view.findViewById(R.id.message);
+        message.setText("El usuario o contraseña son incorrectos");
+        Button button = view.findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private void loggearse() {
@@ -262,7 +291,7 @@ public class Login extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Login.this, "Falló la búsqueda del ID del docente"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                alertDialogId();
             }
         }){
             @Override
@@ -274,10 +303,33 @@ public class Login extends AppCompatActivity {
         };
         colaDeSolicitudes.add(solicitud);
     }
+
+    private void alertDialogId() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_layout, null);
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        TextView title = view.findViewById(R.id.title);
+        title.setText("Ocurrió un error");
+        TextView message = view.findViewById(R.id.message);
+        message.setText("El usuario no existe");
+        Button button = view.findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
     public boolean isConnectedToInternet(){
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
     }
+
+
 
 }

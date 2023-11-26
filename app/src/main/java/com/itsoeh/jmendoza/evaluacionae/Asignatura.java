@@ -3,8 +3,11 @@ package com.itsoeh.jmendoza.evaluacionae;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -27,6 +30,10 @@ public class Asignatura extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_asignatura);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
         txtClaveAsignatura = findViewById(R.id.regasig_txt_claveasig);
         txtClaveGrupo = findViewById(R.id.regasig_txt_clavegrupo);
         spAsignatura = findViewById(R.id.regasig_sp_asignatura);

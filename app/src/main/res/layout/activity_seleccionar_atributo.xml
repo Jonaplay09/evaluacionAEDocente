@@ -20,6 +20,7 @@ Descripción: Layout de fragment cambiar correo
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:paddingTop="20sp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/fondo_login">
 

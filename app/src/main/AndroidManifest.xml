@@ -8,6 +8,7 @@
     <application
         android:networkSecurityConfig="@xml/net"
         android:allowBackup="true"
+        android:fitsSystemWindows="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/ae_isic_fullname"

@@ -9,4 +9,6 @@ public interface Api {
     String ACTUALIZAR_NOMBRE=URL+"?apicall=actualizarNombre";
     String ACTUALIZAR_CORREO=URL+"?apicall=actualizarCorreo";
     String ACTUALIZAR_PASSWORD=URL+"?apicall=actualizarPassword";
+    String VERIFICAR_CORREO=URL+"?apicall=verificarCorreo";
+    String ACTUALIZAR_PASSWORD_SIN_VERI=URL+"?apicall=actualizarPasswordSinVerificar";
 }

@@ -9,10 +9,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,7 +36,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
-
 public class CambiarPassword extends AppCompatActivity {
 
     private Button btn_login_back2, btnGuardarCambios;
@@ -42,6 +44,10 @@ public class CambiarPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cambiar_password);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
         btnGuardarCambios = findViewById(R.id.chapass_btn_guardar);
         txtOldPass = findViewById(R.id.chapass_txt_oldpass);
         txtNewPass = findViewById(R.id.chapass_txt_newpass);
@@ -97,7 +103,6 @@ public class CambiarPassword extends AppCompatActivity {
                                                 LayoutInflater inflater = CambiarPassword.this.getLayoutInflater();
                                                 View dialogView = inflater.inflate(R.layout.dialog_layout, null);
                                                 builder.setView(dialogView);
-
                                                 AlertDialog dialog = builder.create();
                                                 TextView title = dialogView.findViewById(R.id.title);
                                                 title.setText("Ocurrió un error");
@@ -162,7 +167,6 @@ public class CambiarPassword extends AppCompatActivity {
                                     dialog.show();
                                 }
                             }
-
                         }else{
                             AlertDialog.Builder builder = new AlertDialog.Builder(CambiarPassword.this);
                             LayoutInflater inflater = CambiarPassword.this.getLayoutInflater();
