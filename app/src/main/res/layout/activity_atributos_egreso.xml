@@ -80,8 +80,9 @@ Descripción: Layout de fragment asignaturas
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="No hay atributos de Egreso"
+                android:text="No has agregado atributos a este grupo"
                 android:textSize="25sp"
+                android:textAlignment="center"
                 android:fontFamily="@font/cairo_light"
                 android:visibility="gone"></TextView>
 

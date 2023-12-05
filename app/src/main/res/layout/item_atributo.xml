@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/boton_asi"
         android:orientation="horizontal"
-        android:id="@+id/itemasig_item_click">
+        android:id="@+id/itematrib_item_click">
 
 <LinearLayout
     android:layout_width="wrap_content"

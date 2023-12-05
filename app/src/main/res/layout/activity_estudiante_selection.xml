@@ -119,6 +119,21 @@ Descripción: Layout de fragment calific est
                                 android:fontFamily="@font/cairo_light"
                                 android:textSize="14.5sp"
                                 android:layout_marginBottom="5sp"></TextView>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end">
+                            <ImageView
+                                android:layout_width="40sp"
+                                android:layout_height="40sp"
+                                android:visibility="gone"
+                                android:src="@drawable/delete_trash"
+                                android:layout_gravity="center"
+                                android:id="@+id/student_select_btn_eliminar"
+                                android:layout_marginRight="5sp"
+                                android:layout_marginBottom="5sp"
+                                ></ImageView>
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                     <LinearLayout
@@ -147,6 +162,7 @@ Descripción: Layout de fragment calific est
                     android:layout_height="match_parent"
                     android:layout_marginTop="15sp"
                     android:orientation="vertical">
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="0sp"
@@ -157,6 +173,24 @@ Descripción: Layout de fragment calific est
                         android:scrollbarStyle="insideOverlay"
                         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                         />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0sp"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:id="@+id/tv_empty_estudiante"
+                        android:visibility="gone"
+                        android:layout_gravity="center">
+                    <TextView
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No tienes alumnos registrados en este grupo"
+                        android:textSize="25sp"
+                        android:fontFamily="@font/cairo_light"
+                        ></TextView>
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0sp"

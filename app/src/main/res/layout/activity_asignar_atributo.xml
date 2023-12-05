@@ -146,7 +146,8 @@ Descripción: Layout de fragment calific est
         android:layout_marginTop="10sp"
         android:id="@+id/asig_atrib_txt_meta"
         android:padding="3sp"
-        android:textSize="10sp"
+        android:inputType="number"
+        android:textSize="15sp"
         android:fontFamily="@font/cairo_light"></EditText>
                         <TextView
                             android:layout_width="wrap_content"
@@ -164,9 +165,10 @@ Descripción: Layout de fragment calific est
         android:background="@drawable/spinners_gray"
         android:padding="3sp"
         android:layout_marginTop="10sp"
+        android:inputType="number"
         android:id="@+id/asig_atrib_txt_logro"
         android:layout_marginLeft="5sp"
-        android:textSize="10sp"
+        android:textSize="15sp"
         android:fontFamily="@font/cairo_light"></EditText>
 </LinearLayout>
 
@@ -333,11 +335,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                 </LinearLayout>
                                 </LinearLayout>
@@ -445,11 +448,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -556,11 +560,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -668,11 +673,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -780,11 +786,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -892,11 +899,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -1004,11 +1012,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -1120,7 +1129,8 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:inputType="number"
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -1228,11 +1238,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -1341,11 +1352,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -1453,11 +1465,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -1564,11 +1577,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -1678,9 +1692,10 @@ Descripción: Layout de fragment calific est
                                             android:hint="Puntos"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
+                                            android:inputType="number"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -1788,11 +1803,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -1900,11 +1916,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -2013,11 +2030,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -2125,11 +2143,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -2236,11 +2255,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -2348,11 +2368,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -2460,11 +2481,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -2572,11 +2594,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -2684,11 +2707,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -2796,11 +2820,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -2908,11 +2933,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -3021,11 +3047,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -3133,11 +3160,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -3244,11 +3272,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -3356,11 +3385,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -3468,11 +3498,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -3580,11 +3611,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -3692,11 +3724,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -3804,11 +3837,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -3916,11 +3950,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -4029,11 +4064,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -4141,11 +4177,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -4252,11 +4289,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -4364,11 +4402,12 @@ Descripción: Layout de fragment calific est
                                         android:layout_marginLeft="10sp"
                                         android:layout_height="wrap_content"
                                         android:hint="Puntos"
+                                        android:inputType="number"
                                         android:background="@color/white"
                                         android:layout_marginTop="60sp"
                                         android:layout_marginBottom="10sp"
                                         android:fontFamily="@font/cairo_light"
-                                        android:textSize="12sp" />
+                                        android:textSize="15sp" />
 
                                 </LinearLayout>
                                 </LinearLayout>
@@ -4476,11 +4515,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -4588,11 +4628,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -4700,11 +4741,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -4812,11 +4854,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>
@@ -4923,11 +4966,12 @@ Descripción: Layout de fragment calific est
                                             android:layout_marginLeft="10sp"
                                             android:layout_height="wrap_content"
                                             android:hint="Puntos"
+                                            android:inputType="number"
                                             android:background="@color/white"
                                             android:layout_marginTop="60sp"
                                             android:layout_marginBottom="10sp"
                                             android:fontFamily="@font/cairo_light"
-                                            android:textSize="12sp" />
+                                            android:textSize="15sp" />
 
                                     </LinearLayout>
                                 </LinearLayout>

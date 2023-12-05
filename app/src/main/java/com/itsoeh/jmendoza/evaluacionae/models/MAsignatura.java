@@ -80,4 +80,7 @@ public class MAsignatura {
                 ", idDocente=" + idDocente +
                 '}';
     }
+
+    public void setIdAsignaturas(int idAsignaturas) {
+    }
 }

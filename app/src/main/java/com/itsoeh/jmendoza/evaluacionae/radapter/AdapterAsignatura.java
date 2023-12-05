@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 
 public class AdapterAsignatura extends RecyclerView.Adapter<AdapterAsignatura.ViewHolderAsignatura> {
     private ArrayList<MAsignatura> lista;
+    public static String codigoAsignatura;
     private TextView emptyView;
     public AdapterAsignatura(ArrayList<MAsignatura> lista, TextView emptyView) {
         this.lista = lista;
@@ -120,16 +122,19 @@ public class AdapterAsignatura extends RecyclerView.Adapter<AdapterAsignatura.Vi
           //  Intent intent = new Intent(context, EstudianteSelection.class);
             //context.startActivity(intent);
         //}
-        private void clicItem() {
-            Context context = itemView.getContext();
-            Intent intent = new Intent(context, EstudianteSelection.class);
-            // Agrega los datos al Intent
-            intent.putExtra("asignatura", m.getAsignatura());
-            intent.putExtra("claveAsignatura", m.getClaveAsignatura());
-            intent.putExtra("claveGrupo", m.getClaveGrupo());
-            intent.putExtra("codigoAsignatura", m.getCodigoAsignatura());
-            context.startActivity(intent);
-        }
+      private void clicItem() {
+          Context context = itemView.getContext();
+          Intent intent = new Intent(context, EstudianteSelection.class);
+          // Agrega los datos al Intent
+          intent.putExtra("asignatura", m.getAsignatura());
+          intent.putExtra("claveAsignatura", m.getClaveAsignatura());
+          intent.putExtra("claveGrupo", m.getClaveGrupo());
+          intent.putExtra("codigoAsignatura", m.getCodigoAsignatura());
+
+          codigoAsignatura = m.getCodigoAsignatura();
+
+          context.startActivity(intent);
+      }
 
 
         private void clicVer() {

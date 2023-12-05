@@ -61,7 +61,7 @@ public class Login extends AppCompatActivity {
         btnEntrada = findViewById(R.id.login_btn_entrar);
         btnRegistro = findViewById(R.id.login_btn_registrar);
         txtUsuario = findViewById(R.id.login_txt_correo);
-        txtPassword = findViewById(R.id.login_txt_contraseña);
+        txtPassword = findViewById(R.id.login_txt_contrasenia);
         txtForgot = (TextView) findViewById(R.id.login_btn_forgetPassword);
         txtForgot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,8 +95,8 @@ public class Login extends AppCompatActivity {
 
     private void clicEntrar() {
         String correo = txtUsuario.getText().toString();
-        String contraseña = txtPassword.getText().toString();
-        if(correo.equals("")||contraseña.equals("")) {
+        String contrasenia = txtPassword.getText().toString();
+        if(correo.equals("")||contrasenia.equals("")) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             LayoutInflater inflater = this.getLayoutInflater();
             View view = inflater.inflate(R.layout.dialog_layout, null);
@@ -137,8 +137,23 @@ public class Login extends AppCompatActivity {
                                             loggearse();
                                         }
                                     } else {
-                                        Toast.makeText(Login.this, respuesta.getString("message"), Toast.LENGTH_SHORT).show();
-                                        Log.d(TAG, "Respuesta del servidor: " + respuesta.getString("message"));
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+                                        LayoutInflater inflater = Login.this.getLayoutInflater();
+                                        View view = inflater.inflate(R.layout.dialog_layout, null);
+                                        builder.setView(view);
+                                        AlertDialog dialog = builder.create();
+                                        TextView title = view.findViewById(R.id.title);
+                                        title.setText("Ocurrió un error");
+                                        TextView message = view.findViewById(R.id.message);
+                                        message.setText("El usuario o contraseña son incorrectos");
+                                        Button button = view.findViewById(R.id.button);
+                                        button.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                        dialog.show();
                                     }
                                 } catch (JSONException e) {
                                     Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -155,14 +170,14 @@ public class Login extends AppCompatActivity {
                             protected Map<String, String> getParams(){
                                 Map<String, String> parametros = new HashMap<String, String>();
                                 parametros.put("correo", correo);
-                                parametros.put("contrasenia", contraseña);
+                                parametros.put("contrasenia", contrasenia);
                                 return parametros;
                             }
                         };
                         colaDeSolicitudes.add(solicitud);
                     } else {
                         ADocente docente = new ADocente(this);
-                        String [] datos = docente.buscarContrasenia(correo, contraseña);
+                        String [] datos = docente.buscarContrasenia(correo, contrasenia);
                         if (datos != null) {
                             ADocente aDocente = new ADocente(getApplicationContext());
                             int idDocente = aDocente.obtenerIdDocente(correo);

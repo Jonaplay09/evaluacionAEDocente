@@ -5,8 +5,17 @@ public class MAtributo {
     private int logro;
     private int meta;
     private int idAsignatura;
+    private String atributoE;
 
     public MAtributo() {
+    }
+
+    public String getAtributoE() {
+        return atributoE;
+    }
+
+    public void setAtributoE(String atributoE) {
+        this.atributoE = atributoE;
     }
 
     public int getId() {

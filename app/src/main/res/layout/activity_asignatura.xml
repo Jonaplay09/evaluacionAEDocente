@@ -89,6 +89,7 @@ Descripción: Layout de fragment cambiar correo
                             android:fontFamily="@font/cairo_light"
                             android:entries="@array/asignaturas"
                             android:padding="10sp"
+                            android:spinnerMode="dialog"
                             android:layout_marginTop="50dp"
                             android:id="@+id/regasig_sp_asignatura">
                         </Spinner>

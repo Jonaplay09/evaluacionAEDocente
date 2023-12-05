@@ -1,22 +1,38 @@
 package com.itsoeh.jmendoza.evaluacionae.radapter;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.itsoeh.jmendoza.evaluacionae.AtributosEgreso;
 import com.itsoeh.jmendoza.evaluacionae.EstudianteSelection;
 import com.itsoeh.jmendoza.evaluacionae.R;
+import com.itsoeh.jmendoza.evaluacionae.accesoADatos.Api;
+import com.itsoeh.jmendoza.evaluacionae.accesoADatos.VolleySingleton;
 import com.itsoeh.jmendoza.evaluacionae.models.MEstudiante;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AdapterEstudiante extends RecyclerView.Adapter<AdapterEstudiante.ViewHolderEstudiante> {
     private ArrayList<MEstudiante> lista;
@@ -55,11 +71,12 @@ public class AdapterEstudiante extends RecyclerView.Adapter<AdapterEstudiante.Vi
             btnSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Context context = itemView.getContext();
-                    Intent intent = new Intent(context, AtributosEgreso.class);
-                    context.startActivity(intent);
+                    Context context = view.getContext();
+                    EstudianteSelection estudianteSelection = new EstudianteSelection();
+                    estudianteSelection.brincarConDatos(m.getIdEstudiante(), context);
                 }
             });
+
         }
 
         public void setDatos(MEstudiante m) {

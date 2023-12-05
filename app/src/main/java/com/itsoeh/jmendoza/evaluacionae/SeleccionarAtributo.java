@@ -31,34 +31,37 @@ public class SeleccionarAtributo extends AppCompatActivity {
         linearAtrib3 = findViewById(R.id.select_atri_layout_atributo3);
         linearAtrib4 = findViewById(R.id.select_atri_layout_atributo4);
         linearAtrib5 = findViewById(R.id.select_atri_layout_atributo5);
+        Intent intent = getIntent();
+        int idEstudiante = intent.getIntExtra("idEstudiante", -1);
+        String codigoAsignatura = intent.getStringExtra("codigoAsignatura");
         linearAtrib1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clicAtrib1();
+                clicAtrib1(idEstudiante, codigoAsignatura);
             }
         });
         linearAtrib2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clicAtrib2();
+                clicAtrib2(idEstudiante, codigoAsignatura);
             }
         });
         linearAtrib3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clicAtrib3();
+                clicAtrib3(idEstudiante, codigoAsignatura);
             }
         });
         linearAtrib4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clicAtrib4();
+                clicAtrib4(idEstudiante, codigoAsignatura);
             }
         });
         linearAtrib5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clicAtrib5();
+                clicAtrib5(idEstudiante, codigoAsignatura);
             }
         });
 
@@ -77,28 +80,38 @@ public class SeleccionarAtributo extends AppCompatActivity {
 
     }
 
-    private void clicAtrib1() {
+    private void clicAtrib1(int idStudiante, String codigoAsignatura) {
         Intent intent = new Intent(this, AsignarAtributo.class);
         intent.putExtra("atributo1", "A1.-Aplicaciones Computacionales");
+        intent.putExtra("idStudiante", idStudiante);
+        intent.putExtra("codigoAsignatura", codigoAsignatura);
         startActivity(intent);
     }
-    private void clicAtrib2() {
+    private void clicAtrib2(int idStudiante, String codigoAsignatura) {
         Intent intent = new Intent(this, AsignarAtributo.class);
         intent.putExtra("atributo2", "A2.-Modelos Computacionales");
+        intent.putExtra("idStudiante", idStudiante);
+        intent.putExtra("codigoAsignatura", codigoAsignatura);
         startActivity(intent);
     }
-    private void clicAtrib3() {
+    private void clicAtrib3(int idStudiante, String codigoAsignatura) {
         Intent intent = new Intent(this, AsignarAtributo.class);
         intent.putExtra("atributo3", "A3.- Trabajo en Equipo y Comunicación");
+        intent.putExtra("idStudiante", idStudiante);
+        intent.putExtra("codigoAsignatura", codigoAsignatura);
         startActivity(intent);
     }
-    private void clicAtrib4() {
+    private void clicAtrib4(int idStudiante, String codigoAsignatura) {
         Intent intent = new Intent(this, AsignarAtributo.class);
         intent.putExtra("atributo4", "A4.- Investigación");
+        intent.putExtra("idStudiante", idStudiante);
+        intent.putExtra("codigoAsignatura", codigoAsignatura);
         startActivity(intent);
     }
-    private void clicAtrib5() {
+    private void clicAtrib5(int idStudiante, String codigoAsignatura) {
         Intent intent = new Intent(this, AsignarAtributo.class);
+        intent.putExtra("idStudiante", idStudiante);
+        intent.putExtra("codigoAsignatura", codigoAsignatura);
         intent.putExtra("atributo5", "A5.- Preparación para la vida profesional");
         startActivity(intent);
     }

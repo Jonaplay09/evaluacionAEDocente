@@ -1,11 +1,14 @@
 package com.itsoeh.jmendoza.evaluacionae;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -16,12 +19,27 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.itsoeh.jmendoza.evaluacionae.accesoADatos.Api;
+import com.itsoeh.jmendoza.evaluacionae.accesoADatos.VolleySingleton;
 import com.itsoeh.jmendoza.evaluacionae.models.MCriterio;
 import com.itsoeh.jmendoza.evaluacionae.radapter.AdapterCriterio;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AsignarAtributo extends AppCompatActivity {
     private TextView txtNombreAtributo, txtEmpty;
@@ -30,7 +48,7 @@ public class AsignarAtributo extends AppCompatActivity {
             inc1Atri3, inc2Atri3, inc3Atri3, mid1Atri3, mid2Atri3, mid3Atri3, ava1Atri3, ava2Atri3, ava3Atri3,
             inc1Atri4, inc2Atri4, inc3Atri4, mid1Atri4, mid2Atri4, mid3Atri4, ava1Atri4, ava2Atri4, ava3Atri4,
             inc1Atri5, inc2Atri5, inc3Atri5, mid1Atri5, mid2Atri5, mid3Atri5, ava1Atri5, ava2Atri5, ava3Atri5;
-    private Button btnAtributoDescripcion, botonBack,inc1_btnDescripAtri1, inc2_btnDescripAtri1, inc3_btnDescripAtri1, mid1_btnDescripAtri1, mid2_btnDescripAtri1, mid3_btnDescripAtri1, ava1_btnDescripAtri1, ava2_btnDescripAtri1, ava3_btnDescripAtri1,
+    private Button btnAsignar, btnAtributoDescripcion, botonBack,inc1_btnDescripAtri1, inc2_btnDescripAtri1, inc3_btnDescripAtri1, mid1_btnDescripAtri1, mid2_btnDescripAtri1, mid3_btnDescripAtri1, ava1_btnDescripAtri1, ava2_btnDescripAtri1, ava3_btnDescripAtri1,
             inc1_btnDescripAtri2, inc2_btnDescripAtri2, mid1_btnDescripAtri2, mid2_btnDescripAtri2, ava1_btnDescripAtri2, ava2_btnDescripAtri2,
             inc1_btnDescripAtri3, inc2_btnDescripAtri3, inc3_btnDescripAtri3, mid1_btnDescripAtri3, mid2_btnDescripAtri3, mid3_btnDescripAtri3, ava1_btnDescripAtri3, ava2_btnDescripAtri3, ava3_btnDescripAtri3,
             inc1_btnDescripAtri4, inc2_btnDescripAtri4, inc3_btnDescripAtri4, mid1_btnDescripAtri4, mid2_btnDescripAtri4, mid3_btnDescripAtri4, ava1_btnDescripAtri4, ava2_btnDescripAtri4, ava3_btnDescripAtri4,
@@ -61,6 +79,7 @@ public class AsignarAtributo extends AppCompatActivity {
         botonBack = findViewById(R.id.asig_atributo_btn__back);
         txtEmpty = findViewById(R.id.asig_atrib_txt_empty);
         btnAtributoDescripcion = findViewById(R.id.asig_atributo_btn_descripcion);
+        btnAsignar = findViewById(R.id.asig_atributo_btn_asignar);
         txtLogro = findViewById(R.id.asig_atrib_txt_logro);
         txtMeta = findViewById(R.id.asig_atrib_txt_meta);
         botonBack.setOnClickListener(new View.OnClickListener() {
@@ -1476,6 +1495,8 @@ public class AsignarAtributo extends AppCompatActivity {
             }
         });
         Intent intent = getIntent();
+        int idEstudiante = intent.getIntExtra("idEstudiante", -1);
+        String codigoAsignatura = intent.getStringExtra("codigoAsignatura");
         String atributo1 = intent.getStringExtra("atributo1");
         String atributo2 = intent.getStringExtra("atributo2");
         String atributo3 = intent.getStringExtra("atributo3");
@@ -1717,6 +1738,51 @@ public class AsignarAtributo extends AppCompatActivity {
                             ava1Atri1.setVisibility(View.GONE);
                             ava2Atri1.setVisibility(View.GONE);
                             ava3Atri1.setVisibility(View.GONE);
+
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo1Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri1Inc = inc1_txtCriterioAtri1.getText().toString();
+                                    int puntos1Atri1Inc = Integer.parseInt(inc1_txtPuntosAtri1.getText().toString());
+                                    String criterioEspecifico2Atri1Inc = inc2_txtCriterioAtri1.getText().toString();
+                                    int puntos2Atri1Inc = Integer.parseInt(inc2_txtPuntosAtri1.getText().toString());
+                                    String criterioEspecifico3Atri1Inc = inc3_txtCriterioAtri1.getText().toString();
+                                    int puntos3Atri1Inc = Integer.parseInt(inc3_txtPuntosAtri1.getText().toString());
+                                    final String nivel = "Incipiente";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo(idAsignaturaR, atributo1Nombre, logro, meta, criterioEspecifico1Atri1Inc, puntos1Atri1Inc, criterioEspecifico2Atri1Inc, puntos2Atri1Inc,criterioEspecifico3Atri1Inc, puntos3Atri1Inc, nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
+
                         }
                         if (atributo2 != null) {
                             inc1Atri2.setVisibility(View.VISIBLE);
@@ -1725,6 +1791,47 @@ public class AsignarAtributo extends AppCompatActivity {
                             mid2Atri2.setVisibility(View.GONE);
                             ava1Atri2.setVisibility(View.GONE);
                             ava2Atri2.setVisibility(View.GONE);
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo2Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri2Inc = inc1_txtCriterioAtri2.getText().toString();
+                                    int puntos1Atri2Inc = Integer.parseInt(inc1_txtPuntosAtri2.getText().toString());
+                                    String criterioEspecifico2Atri2Inc = inc2_txtCriterioAtri2.getText().toString();
+                                    int puntos2Atri2Inc = Integer.parseInt(inc2_txtPuntosAtri2.getText().toString());
+                                    final String nivel = "Incipiente";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo2(idAsignaturaR, atributo2Nombre, logro, meta, criterioEspecifico1Atri2Inc, puntos1Atri2Inc, criterioEspecifico2Atri2Inc, puntos2Atri2Inc, nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
                         }
                         if (atributo3 != null) {
                             inc1Atri3.setVisibility(View.VISIBLE);
@@ -1736,6 +1843,49 @@ public class AsignarAtributo extends AppCompatActivity {
                             ava1Atri3.setVisibility(View.GONE);
                             ava2Atri3.setVisibility(View.GONE);
                             ava3Atri3.setVisibility(View.GONE);
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo3Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri3Inc = inc1_txtCriterioAtri3.getText().toString();
+                                    int puntos1Atri3Inc = Integer.parseInt(inc1_txtPuntosAtri3.getText().toString());
+                                    String criterioEspecifico2Atri3Inc = inc2_txtCriterioAtri3.getText().toString();
+                                    int puntos2Atri3Inc = Integer.parseInt(inc2_txtPuntosAtri3.getText().toString());
+                                    String criterioEspecifico3Atri3Inc = inc3_txtCriterioAtri3.getText().toString();
+                                    int puntos3Atri3Inc = Integer.parseInt(inc3_txtPuntosAtri3.getText().toString());
+                                    final String nivel = "Incipiente";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo(idAsignaturaR, atributo3Nombre, logro, meta, criterioEspecifico1Atri3Inc, puntos1Atri3Inc, criterioEspecifico2Atri3Inc, puntos2Atri3Inc,criterioEspecifico3Atri3Inc, puntos3Atri3Inc, nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
                         }
                         if (atributo4 != null) {
                             inc1Atri4.setVisibility(View.VISIBLE);
@@ -1747,6 +1897,49 @@ public class AsignarAtributo extends AppCompatActivity {
                             ava1Atri4.setVisibility(View.GONE);
                             ava2Atri4.setVisibility(View.GONE);
                             ava3Atri4.setVisibility(View.GONE);
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo4Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri4Inc = inc1_txtCriterioAtri4.getText().toString();
+                                    int puntos1Atri4Inc = Integer.parseInt(inc1_txtPuntosAtri4.getText().toString());
+                                    String criterioEspecifico2Atri4Inc = inc2_txtCriterioAtri4.getText().toString();
+                                    int puntos2Atri4Inc = Integer.parseInt(inc2_txtPuntosAtri4.getText().toString());
+                                    String criterioEspecifico3Atri4Inc = inc3_txtCriterioAtri4.getText().toString();
+                                    int puntos3Atri4Inc = Integer.parseInt(inc3_txtPuntosAtri4.getText().toString());
+                                    final String nivel = "Incipiente";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo(idAsignaturaR, atributo4Nombre, logro, meta, criterioEspecifico1Atri4Inc, puntos1Atri4Inc, criterioEspecifico2Atri4Inc, puntos2Atri4Inc,criterioEspecifico3Atri4Inc, puntos3Atri4Inc, nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
                         }
                         if (atributo5 != null) {
                             inc1Atri5.setVisibility(View.VISIBLE);
@@ -1758,6 +1951,49 @@ public class AsignarAtributo extends AppCompatActivity {
                             ava1Atri5.setVisibility(View.GONE);
                             ava2Atri5.setVisibility(View.GONE);
                             ava3Atri5.setVisibility(View.GONE);
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo5Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri5Inc = inc1_txtCriterioAtri5.getText().toString();
+                                    int puntos1Atri5Inc = Integer.parseInt(inc1_txtPuntosAtri5.getText().toString());
+                                    String criterioEspecifico2Atri5Inc = inc2_txtCriterioAtri5.getText().toString();
+                                    int puntos2Atri5Inc = Integer.parseInt(inc2_txtPuntosAtri5.getText().toString());
+                                    String criterioEspecifico3Atri5Inc = inc3_txtCriterioAtri5.getText().toString();
+                                    int puntos3Atri5Inc = Integer.parseInt(inc3_txtPuntosAtri5.getText().toString());
+                                    final String nivel = "Incipiente";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo(idAsignaturaR, atributo5Nombre, logro, meta, criterioEspecifico1Atri5Inc, puntos1Atri5Inc, criterioEspecifico2Atri5Inc, puntos2Atri5Inc,criterioEspecifico3Atri5Inc, puntos3Atri5Inc, nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
                         }
                         break;
                     case "M":
@@ -1772,6 +2008,49 @@ public class AsignarAtributo extends AppCompatActivity {
                             ava1Atri1.setVisibility(View.GONE);
                             ava2Atri1.setVisibility(View.GONE);
                             ava3Atri1.setVisibility(View.GONE);
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo1Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri1Mid = mid1_txtCriterioAtri1.getText().toString();
+                                    int puntos1Atri1Mid = Integer.parseInt(mid1_txtPuntosAtri1.getText().toString());
+                                    String criterioEspecifico2Atri1Mid = mid2_txtCriterioAtri1.getText().toString();
+                                    int puntos2Atri1Mid = Integer.parseInt(mid2_txtPuntosAtri1.getText().toString());
+                                    String criterioEspecifico3Atri1Mid = mid3_txtCriterioAtri1.getText().toString();
+                                    int puntos3Atri1Mid = Integer.parseInt(mid3_txtPuntosAtri1.getText().toString());
+                                    final String nivel = "Medio";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo(idAsignaturaR, atributo1Nombre, logro, meta, criterioEspecifico1Atri1Mid , puntos1Atri1Mid , criterioEspecifico2Atri1Mid , puntos2Atri1Mid,criterioEspecifico3Atri1Mid , puntos3Atri1Mid , nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
                         }
                         if (atributo2 != null) {
                             inc1Atri2.setVisibility(View.GONE);
@@ -1780,6 +2059,47 @@ public class AsignarAtributo extends AppCompatActivity {
                             mid2Atri2.setVisibility(View.VISIBLE);
                             ava1Atri2.setVisibility(View.GONE);
                             ava2Atri2.setVisibility(View.GONE);
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo2Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri2Mid = mid1_txtCriterioAtri2.getText().toString();
+                                    int puntos1Atri2Mid = Integer.parseInt(mid1_txtPuntosAtri2.getText().toString());
+                                    String criterioEspecifico2Atri2Mid = mid2_txtCriterioAtri2.getText().toString();
+                                    int puntos2Atri2Mid = Integer.parseInt(mid2_txtPuntosAtri2.getText().toString());
+                                    final String nivel = "Medio";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo2(idAsignaturaR, atributo2Nombre, logro, meta, criterioEspecifico1Atri2Mid , puntos1Atri2Mid , criterioEspecifico2Atri2Mid , puntos2Atri2Mid , nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
                         }
                         if (atributo3 != null) {
                             inc1Atri3.setVisibility(View.GONE);
@@ -1791,6 +2111,49 @@ public class AsignarAtributo extends AppCompatActivity {
                             ava1Atri3.setVisibility(View.GONE);
                             ava2Atri3.setVisibility(View.GONE);
                             ava3Atri3.setVisibility(View.GONE);
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo3Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri3Mid = mid1_txtCriterioAtri3.getText().toString();
+                                    int puntos1Atri3Mid = Integer.parseInt(mid1_txtPuntosAtri3.getText().toString());
+                                    String criterioEspecifico2Atri3Mid = mid2_txtCriterioAtri3.getText().toString();
+                                    int puntos2Atri3Mid = Integer.parseInt(mid2_txtPuntosAtri3.getText().toString());
+                                    String criterioEspecifico3Atri3Mid = mid3_txtCriterioAtri3.getText().toString();
+                                    int puntos3Atri3Mid = Integer.parseInt(mid3_txtPuntosAtri3.getText().toString());
+                                    final String nivel = "Medio";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo(idAsignaturaR, atributo3Nombre, logro, meta, criterioEspecifico1Atri3Mid , puntos1Atri3Mid , criterioEspecifico2Atri3Mid , puntos2Atri3Mid,criterioEspecifico3Atri3Mid , puntos3Atri3Mid , nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
                         }
                         if (atributo4 != null) {
                             inc1Atri4.setVisibility(View.GONE);
@@ -1802,6 +2165,49 @@ public class AsignarAtributo extends AppCompatActivity {
                             ava1Atri4.setVisibility(View.GONE);
                             ava2Atri4.setVisibility(View.GONE);
                             ava3Atri4.setVisibility(View.GONE);
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo4Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri4Mid = mid1_txtCriterioAtri4.getText().toString();
+                                    int puntos1Atri4Mid = Integer.parseInt(mid1_txtPuntosAtri4.getText().toString());
+                                    String criterioEspecifico2Atri4Mid = mid2_txtCriterioAtri4.getText().toString();
+                                    int puntos2Atri4Mid = Integer.parseInt(mid2_txtPuntosAtri4.getText().toString());
+                                    String criterioEspecifico3Atri4Mid = mid3_txtCriterioAtri4.getText().toString();
+                                    int puntos3Atri4Mid = Integer.parseInt(mid3_txtPuntosAtri4.getText().toString());
+                                    final String nivel = "Medio";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo(idAsignaturaR, atributo4Nombre, logro, meta, criterioEspecifico1Atri4Mid , puntos1Atri4Mid , criterioEspecifico2Atri4Mid , puntos2Atri4Mid,criterioEspecifico3Atri4Mid , puntos3Atri4Mid , nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
                         }
                         if (atributo5 != null) {
                             inc1Atri5.setVisibility(View.GONE);
@@ -1813,6 +2219,50 @@ public class AsignarAtributo extends AppCompatActivity {
                             ava1Atri5.setVisibility(View.GONE);
                             ava2Atri5.setVisibility(View.GONE);
                             ava3Atri5.setVisibility(View.GONE);
+
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo4Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri5Mid = mid1_txtCriterioAtri5.getText().toString();
+                                    int puntos1Atri5Mid = Integer.parseInt(mid1_txtPuntosAtri5.getText().toString());
+                                    String criterioEspecifico2Atri5Mid = mid2_txtCriterioAtri5.getText().toString();
+                                    int puntos2Atri5Mid = Integer.parseInt(mid2_txtPuntosAtri5.getText().toString());
+                                    String criterioEspecifico3Atri5Mid = mid3_txtCriterioAtri5.getText().toString();
+                                    int puntos3Atri5Mid = Integer.parseInt(mid3_txtPuntosAtri5.getText().toString());
+                                    final String nivel = "Medio";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo(idAsignaturaR, atributo4Nombre, logro, meta, criterioEspecifico1Atri5Mid , puntos1Atri5Mid , criterioEspecifico2Atri5Mid , puntos2Atri5Mid,criterioEspecifico3Atri5Mid , puntos3Atri5Mid , nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
                         }
                         break;
                     case "A":
@@ -1827,6 +2277,49 @@ public class AsignarAtributo extends AppCompatActivity {
                             ava1Atri1.setVisibility(View.VISIBLE);
                             ava2Atri1.setVisibility(View.VISIBLE);
                             ava3Atri1.setVisibility(View.VISIBLE);
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo1Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri1Ava = ava1_txtCriterioAtri1.getText().toString();
+                                    int puntos1Atri1Ava = Integer.parseInt(ava1_txtPuntosAtri1.getText().toString());
+                                    String criterioEspecifico2Atri1Ava = ava1_txtCriterioAtri1.getText().toString();
+                                    int puntos2Atri1Ava = Integer.parseInt(ava2_txtPuntosAtri1.getText().toString());
+                                    String criterioEspecifico3Atri1Ava = ava3_txtCriterioAtri1.getText().toString();
+                                    int puntos3Atri1Ava = Integer.parseInt(ava3_txtPuntosAtri1.getText().toString());
+                                    final String nivel = "Avanzado";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo(idAsignaturaR, atributo1Nombre, logro, meta, criterioEspecifico1Atri1Ava , puntos1Atri1Ava , criterioEspecifico2Atri1Ava , puntos2Atri1Ava,criterioEspecifico3Atri1Ava , puntos3Atri1Ava , nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
                         }
                         if (atributo2 != null) {
                             inc1Atri2.setVisibility(View.GONE);
@@ -1835,6 +2328,47 @@ public class AsignarAtributo extends AppCompatActivity {
                             mid2Atri2.setVisibility(View.GONE);
                             ava1Atri2.setVisibility(View.VISIBLE);
                             ava2Atri2.setVisibility(View.VISIBLE);
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo2Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri2Ava = ava1_txtCriterioAtri2.getText().toString();
+                                    int puntos1Atri2Ava = Integer.parseInt(ava1_txtPuntosAtri2.getText().toString());
+                                    String criterioEspecifico2Atri2Ava = ava1_txtCriterioAtri2.getText().toString();
+                                    int puntos2Atri2Ava = Integer.parseInt(ava2_txtPuntosAtri2.getText().toString());
+                                    final String nivel = "Avanzado";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo2(idAsignaturaR, atributo2Nombre, logro, meta, criterioEspecifico1Atri2Ava , puntos1Atri2Ava , criterioEspecifico2Atri2Ava , puntos2Atri2Ava,nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
                         }
                         if (atributo3 != null) {
                             inc1Atri3.setVisibility(View.GONE);
@@ -1846,6 +2380,49 @@ public class AsignarAtributo extends AppCompatActivity {
                             ava1Atri3.setVisibility(View.VISIBLE);
                             ava2Atri3.setVisibility(View.VISIBLE);
                             ava3Atri3.setVisibility(View.VISIBLE);
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo3Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri3Ava = ava1_txtCriterioAtri3.getText().toString();
+                                    int puntos1Atri3Ava = Integer.parseInt(ava1_txtPuntosAtri3.getText().toString());
+                                    String criterioEspecifico2Atri3Ava = ava1_txtCriterioAtri3.getText().toString();
+                                    int puntos2Atri3Ava = Integer.parseInt(ava2_txtPuntosAtri3.getText().toString());
+                                    String criterioEspecifico3Atri3Ava = ava3_txtCriterioAtri3.getText().toString();
+                                    int puntos3Atri3Ava = Integer.parseInt(ava3_txtPuntosAtri3.getText().toString());
+                                    final String nivel = "Avanzado";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo(idAsignaturaR, atributo3Nombre, logro, meta, criterioEspecifico1Atri3Ava , puntos1Atri3Ava , criterioEspecifico2Atri3Ava , puntos2Atri3Ava,criterioEspecifico3Atri3Ava , puntos3Atri3Ava , nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
                         }
                         if (atributo4 != null) {
                             inc1Atri4.setVisibility(View.GONE);
@@ -1857,6 +2434,49 @@ public class AsignarAtributo extends AppCompatActivity {
                             ava1Atri4.setVisibility(View.VISIBLE);
                             ava2Atri4.setVisibility(View.VISIBLE);
                             ava3Atri4.setVisibility(View.VISIBLE);
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo4Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri4Ava = ava1_txtCriterioAtri4.getText().toString();
+                                    int puntos1Atri4Ava = Integer.parseInt(ava1_txtPuntosAtri4.getText().toString());
+                                    String criterioEspecifico2Atri4Ava = ava1_txtCriterioAtri4.getText().toString();
+                                    int puntos2Atri4Ava = Integer.parseInt(ava2_txtPuntosAtri4.getText().toString());
+                                    String criterioEspecifico3Atri4Ava = ava3_txtCriterioAtri4.getText().toString();
+                                    int puntos3Atri4Ava = Integer.parseInt(ava3_txtPuntosAtri4.getText().toString());
+                                    final String nivel = "Avanzado";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo(idAsignaturaR, atributo4Nombre, logro, meta, criterioEspecifico1Atri4Ava , puntos1Atri4Ava , criterioEspecifico2Atri4Ava , puntos2Atri4Ava,criterioEspecifico3Atri4Ava , puntos3Atri4Ava , nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
                         }
                         if (atributo5 != null) {
                             inc1Atri5.setVisibility(View.GONE);
@@ -1868,6 +2488,50 @@ public class AsignarAtributo extends AppCompatActivity {
                             ava1Atri5.setVisibility(View.VISIBLE);
                             ava2Atri5.setVisibility(View.VISIBLE);
                             ava3Atri5.setVisibility(View.VISIBLE);
+                            btnAsignar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String atributo5Nombre = txtNombreAtributo.getText().toString();
+                                    int logro = Integer.parseInt(txtLogro.getText().toString());
+                                    int meta = Integer.parseInt(txtMeta.getText().toString());
+                                    String criterioEspecifico1Atri5Ava = ava1_txtCriterioAtri5.getText().toString();
+                                    int puntos1Atri5Ava = Integer.parseInt(ava1_txtPuntosAtri5.getText().toString());
+                                    String criterioEspecifico2Atri5Ava = ava1_txtCriterioAtri5.getText().toString();
+                                    int puntos2Atri5Ava = Integer.parseInt(ava2_txtPuntosAtri5.getText().toString());
+                                    String criterioEspecifico3Atri5Ava = ava3_txtCriterioAtri5.getText().toString();
+                                    int puntos3Atri5Ava = Integer.parseInt(ava3_txtPuntosAtri5.getText().toString());
+                                    final String nivel = "Avanzado";
+                                    RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(AsignarAtributo.this).getRequestQueue();
+                                    StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ASIGNATURA, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject respuesta = new JSONObject(response);
+                                                int idAsignaturaR = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAsignaturas");
+                                                registrarAtributo(idAsignaturaR, atributo5Nombre, logro, meta, criterioEspecifico1Atri5Ava , puntos1Atri5Ava , criterioEspecifico2Atri5Ava , puntos2Atri5Ava,criterioEspecifico3Atri5Ava , puntos3Atri5Ava , nivel);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "" + e.getMessage());
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "" + error.getMessage());
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> parametros = new HashMap<String, String>();
+                                            parametros.put("codigoAsignatura", codigoAsignatura);
+                                            return parametros;
+                                        }
+                                    };
+                                    colaDeSolicitudes.add(solicitud);
+                                }
+                            });
+
                         }
                         break;
                 }
@@ -1882,5 +2546,201 @@ public class AsignarAtributo extends AppCompatActivity {
 
 
     }
-}
 
+    private void registrarAtributo(int idAsignatura, String atributo1Nombre, int logro, int meta,String criterio1, int puntos1, String criterio2, int puntos2, String criterio3, int puntos3, String nivel) {
+        Log.d(TAG, "Se llegó aquí registrarAtributo"+ idAsignatura);
+        RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(this).getRequestQueue();
+        StringRequest solicitud = new StringRequest(Request.Method.POST, Api.GUARDAR_ATRIBUTOE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d(TAG, "registrarAtributo respuesta del servidor");
+                    JSONObject respuesta = new JSONObject(response);
+                    Log.d(TAG, "registrarAtributo respuesta del servidor" + respuesta);
+                    Toast.makeText(AsignarAtributo.this, "Se realizó correctamente el registro", Toast.LENGTH_SHORT).show();
+                    obtenerIdAtrib(idAsignatura, atributo1Nombre, criterio1, puntos1, criterio2, puntos2, criterio3, puntos3, nivel);
+                } catch (JSONException e) {
+                    Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "" + e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "" + error.getMessage());
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("logro", String.valueOf(logro));
+                parametros.put("meta", String.valueOf(meta));
+                parametros.put("idAsignaturas", String.valueOf(idAsignatura));
+                parametros.put("atributoE", atributo1Nombre);
+                return parametros;
+            }
+        };
+        colaDeSolicitudes.add(solicitud);
+    }
+    private void registrarAtributo2(int idAsignatura, String atributo1Nombre, int logro, int meta,String criterio1, int puntos1, String criterio2, int puntos2, String nivel) {
+        Log.d(TAG, "Se llegó aquí registrarAtributo"+ idAsignatura);
+        RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(this).getRequestQueue();
+        StringRequest solicitud = new StringRequest(Request.Method.POST, Api.GUARDAR_ATRIBUTOE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d(TAG, "registrarAtributo respuesta del servidor");
+                    JSONObject respuesta = new JSONObject(response);
+                    Log.d(TAG, "registrarAtributo respuesta del servidor" + respuesta);
+                    Toast.makeText(AsignarAtributo.this, "Se realizó correctamente el registro", Toast.LENGTH_SHORT).show();
+                    obtenerIdAtrib2(idAsignatura, atributo1Nombre, criterio1, puntos1, criterio2, puntos2, nivel);
+                } catch (JSONException e) {
+                    Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "" + e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "" + error.getMessage());
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("logro", String.valueOf(logro));
+                parametros.put("meta", String.valueOf(meta));
+                parametros.put("idAsignaturas", String.valueOf(idAsignatura));
+                parametros.put("atributoE", atributo1Nombre);
+                return parametros;
+            }
+        };
+        colaDeSolicitudes.add(solicitud);
+    }
+
+    private void obtenerIdAtrib(int idAsignatura, String atributo1Nombre, String criterio1, int puntos1, String criterio2, int puntos2, String criterio3, int puntos3, String nivel) {
+
+        RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(this).getRequestQueue();
+        Log.d(TAG, "Se llegó  a obtenerIdAtrib");
+        StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ATRIBUTOE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject respuesta = new JSONObject(response);
+                    Log.d(TAG, "registrarAtributo respuesta del servidor" + respuesta);
+                    Toast.makeText(AsignarAtributo.this, "Se realizó correctamente el registro", Toast.LENGTH_SHORT).show();
+                    int idAtributoE = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAtributoE");
+                    for (int i = 1; i <= 3; i++){
+                        if(i==1 ){
+                            registrarCriterios(criterio1, nivel, idAtributoE, puntos1);
+                        } else if (i==2) {
+                            registrarCriterios(criterio2, nivel, idAtributoE, puntos2);
+                        } else if (i == 3) {
+                            registrarCriterios(criterio3, nivel, idAtributoE, puntos3);
+                        }
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "" + e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "" + error.getMessage());
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("atributoE", atributo1Nombre);
+                parametros.put("idAsignaturas", String.valueOf(idAsignatura));
+                return parametros;
+            }
+        };
+        colaDeSolicitudes.add(solicitud);
+    }
+    private void obtenerIdAtrib2(int idAsignatura, String atributo1Nombre, String criterio1, int puntos1, String criterio2, int puntos2, String nivel) {
+
+        RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(this).getRequestQueue();
+        Log.d(TAG, "Se llegó  a obtenerIdAtrib");
+        StringRequest solicitud = new StringRequest(Request.Method.POST, Api.OBTENER_ID_ATRIBUTOE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject respuesta = new JSONObject(response);
+                    Log.d(TAG, "registrarAtributo respuesta del servidor" + respuesta);
+                    Toast.makeText(AsignarAtributo.this, "Se realizó correctamente el registro", Toast.LENGTH_SHORT).show();
+                    int idAtributoE = respuesta.getJSONArray("contenido").getJSONObject(0).getInt("idAtributoE");
+                    for (int i = 1; i <= 3; i++) {
+                        if (i == 1) {
+                            registrarCriterios(criterio1, nivel, idAtributoE, puntos1);
+                        } else if (i == 2) {
+                            registrarCriterios(criterio2, nivel, idAtributoE, puntos2);
+                        }
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "" + e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "" + error.getMessage());
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("atributoE", atributo1Nombre);
+                parametros.put("idAsignaturas", String.valueOf(idAsignatura));
+                return parametros;
+            }
+        };
+        colaDeSolicitudes.add(solicitud);
+    }
+
+    private void registrarCriterios(String criterioEspecificoFinal, String nivel, int idAtributoE, int puntosFinal) {
+        Log.d(TAG, "Se llegó  a registrarCriterios");
+        RequestQueue colaDeSolicitudes = VolleySingleton.getInstance(this).getRequestQueue();
+        StringRequest solicitud = new StringRequest(Request.Method.POST, Api.GUARDAR_CRITERIOSEVAL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject respuesta = new JSONObject(response);
+                    Toast.makeText(AsignarAtributo.this, "Se realizó correctamente el registro", Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    Toast.makeText(AsignarAtributo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "" + e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(AsignarAtributo.this, "Falló el registro" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "" + error.getMessage());
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("indicadorEspecifico", criterioEspecificoFinal);
+                parametros.put("nivel", nivel);
+                parametros.put("idAtributoE", String.valueOf(idAtributoE));
+                parametros.put("puntos", String.valueOf(puntosFinal));
+                return parametros;
+            }
+        };
+        colaDeSolicitudes.add(solicitud);
+    }
+}

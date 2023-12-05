@@ -22,8 +22,10 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.itsoeh.jmendoza.evaluacionae.AsignarAtributo;
+import com.itsoeh.jmendoza.evaluacionae.AtributosEgreso;
 import com.itsoeh.jmendoza.evaluacionae.CambiarNombre;
 import com.itsoeh.jmendoza.evaluacionae.EstudianteSelection;
+import com.itsoeh.jmendoza.evaluacionae.EvalAtributtes;
 import com.itsoeh.jmendoza.evaluacionae.R;
 import com.itsoeh.jmendoza.evaluacionae.accesoADatos.AAsignatura;
 import com.itsoeh.jmendoza.evaluacionae.models.MAsignatura;
@@ -52,14 +54,12 @@ public class AdapterAtributo extends RecyclerView.Adapter<AdapterAtributo.ViewHo
     @Override
     public void onBindViewHolder(@NonNull AdapterAtributo.ViewHolderAtributo holder, int position) {
         holder.setDatos(lista.get(position));
-        /*holder.itemClick.setOnClickListener(new View.OnClickListener() {
+        holder.itemClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
                 holder.clicItem();
             }
         });
-
-         */
     }
 
 
@@ -99,6 +99,13 @@ public class AdapterAtributo extends RecyclerView.Adapter<AdapterAtributo.ViewHo
             emptyView = itemView.findViewById(R.id.tv_empty);
             txtAtributo=itemView.findViewById(R.id.itematrib_txt_nombre);
             txtPuntos=itemView.findViewById(R.id.itematrib_txt_puntos);
+            itemClick= itemView.findViewById(R.id.itematrib_item_click);
+            itemClick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clicItem();
+                }
+            });
             //itemClick= itemView.findViewById(R.id.itemasig_item_click);
 
 
@@ -122,9 +129,14 @@ public class AdapterAtributo extends RecyclerView.Adapter<AdapterAtributo.ViewHo
 
 
         private void clicItem() {
+            int idEstudiante = AtributosEgreso.idEstudianteFinal;
             Context context = itemView.getContext();
-            Intent intent = new Intent(context, AsignarAtributo.class);
-            // Agrega los datos al Intent
+            Intent intent = new Intent(context, EvalAtributtes.class);
+            intent.putExtra("idAtributoE", m.getId());
+            intent.putExtra("atributoE", m.getAtributoE());
+            intent.putExtra("meta", m.getMeta());
+            intent.putExtra("logro", m.getLogro());
+            intent.putExtra("idEstudiante", idEstudiante);
             context.startActivity(intent);
         }
 
@@ -144,8 +156,8 @@ public class AdapterAtributo extends RecyclerView.Adapter<AdapterAtributo.ViewHo
         public void setDatos(MAtributo m) {
             this.m=m;
             if(m!=null){
-               // txtAtributo.setText(m.get());
-                //txtPuntos.setText(m.getClaveGrupo());
+                txtAtributo.setText(m.getAtributoE());
+                txtPuntos.setText(String.valueOf(m.getMeta()));
             }
         }
     }

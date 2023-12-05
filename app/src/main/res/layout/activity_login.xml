@@ -95,7 +95,7 @@ Descripción: Layout de de activity login
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:id="@+id/login_txt_contraseña"
+                android:id="@+id/login_txt_contrasenia"
                 android:drawableEnd="@drawable/ic__key"
                 android:hint="Contraseña"
                 android:inputType="textPassword"

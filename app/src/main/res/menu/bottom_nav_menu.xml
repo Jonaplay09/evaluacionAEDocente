@@ -12,7 +12,7 @@ Descripción: Layout del bottom menú
 
     <item
         android:id="@+id/asignaturas"
-        android:title="Asignaturas"
+        android:title="Mis Grupos"
         android:icon="@mipmap/menu_foundcursos"/>
 
     <item

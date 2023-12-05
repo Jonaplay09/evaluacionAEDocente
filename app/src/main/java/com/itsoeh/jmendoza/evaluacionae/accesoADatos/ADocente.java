@@ -45,10 +45,10 @@ public class ADocente extends AccesoADatos {
         return lista;
     }
 
-    public String[] buscarContrasenia(String correo, String contraseña){
+    public String[] buscarContrasenia(String correo, String contrasenia){
         String datos[] = new String[2];
         SQLiteDatabase db = getReadableDatabase();
-        Cursor reg = db.rawQuery("SELECT nombre, password FROM docente WHERE correo = '"+correo+"' AND password = '"+contraseña+"'",null);
+        Cursor reg = db.rawQuery("SELECT nombre, password FROM docente WHERE correo = '"+correo+"' AND password = '"+contrasenia+"'",null);
         if (reg.getCount()!=0){
             reg.moveToNext();
             datos[0] = reg.getString(0);
@@ -110,11 +110,4 @@ public class ADocente extends AccesoADatos {
         int filasActualizadas = db.update("docente", contentValues, "correo = ?", new String[]{String.valueOf(correo)});
         return filasActualizadas > 0;
     }
-
-
-
-
-
-
-
 }

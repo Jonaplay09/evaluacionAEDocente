@@ -81,15 +81,15 @@ private Button btnBackLog2, btnEnviar;
 
     private void clicEnviar() {
         String correo = "atributosegresoitsoeh5@gmail.com";
-        String contraseña = "dgxs hsaj lyjn iruv";
+        String contrasenia = "dgxs hsaj lyjn iruv";
         String caracteresPermitidos = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder nuevaContraseña = new StringBuilder();
+        StringBuilder nuevaContrasenia = new StringBuilder();
         Random rnd = new Random();
-        while (nuevaContraseña.length() < 8) {
+        while (nuevaContrasenia.length() < 8) {
             int index = (int) (rnd.nextFloat() * caracteresPermitidos.length());
-            nuevaContraseña.append(caracteresPermitidos.charAt(index));
+            nuevaContrasenia.append(caracteresPermitidos.charAt(index));
         }
-        final String contraseniaGenerada = nuevaContraseña.toString();
+        final String contraseniaGenerada = nuevaContrasenia.toString();
         if (Pattern.matches("^[a-zA-Z0-9._%+-]+@itsoeh\\.edu\\.mx\\s*$", txtCorreo.getText().toString())) {
 
             if (isConnectedToInternet()) {
@@ -110,7 +110,7 @@ private Button btnBackLog2, btnEnviar;
                                             JSONObject respuesta = new JSONObject(response);
                                             if (!respuesta.getBoolean("error")) {
                                                 actuPassLocal(contraseniaGenerada);
-                                                new EnviarCorreoAsyncTask(Recuperarcontra.this, correo, contraseña, txtCorreo.getText().toString(),
+                                                new EnviarCorreoAsyncTask(Recuperarcontra.this, correo, contrasenia, txtCorreo.getText().toString(),
                                                         "Recuperación de contraseña", "tu nueva contraseña es: " + contraseniaGenerada).execute();
                                             } else {
                                                 alertDialogError2();
